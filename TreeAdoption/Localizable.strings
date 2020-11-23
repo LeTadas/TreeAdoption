@@ -1,3 +1,10 @@
 //MARK: OnboardingView
 "onboarding_view_title" = "A tree today, a forest tomorrow";
 "onboarding_view_begin_button_title" = "Let's Begin";
+
+//MARK: LoginView
+"login_view_title" = "Login";
+"login_view_email_input_label" = "Email";
+"login_view_password_input_label" = "Password";
+"login_view_forgot_password_button_label" = "Forgot password?";
+"login_view_no_account_button_label" = "I don't have an account";
