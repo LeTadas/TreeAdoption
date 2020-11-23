@@ -7,5 +7,4 @@ class LoginViewModel: ObservableObject {
 
 extension LoginViewModel {
     func loginPressed() {}
-    func forgotPasswordPressed() {}
 }
