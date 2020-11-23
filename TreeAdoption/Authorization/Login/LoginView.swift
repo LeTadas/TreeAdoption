@@ -22,12 +22,11 @@ struct LoginView: View {
                     Spacer()
                 }
                 Spacer()
-                Button(action: viewModel.noAccountPressed) {
+                NavigationLink(destination: RegisterView()) {
                     Text("login_view_no_account_button_label")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.accentColor)
                 }
-                .padding(.top, 8)
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)
