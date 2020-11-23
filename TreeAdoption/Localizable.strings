@@ -8,6 +8,7 @@
 "login_view_password_input_label" = "Password";
 "login_view_forgot_password_button_label" = "Forgot password?";
 "login_view_no_account_button_label" = "I don't have an account";
+"login_view_login_button_label" = "Login";
 
 
 //MARK: RegisterView
@@ -16,3 +17,9 @@
 "register_view_password_input_label" = "Password";
 "register_view_repeat_password_input_label" = "Repeat Password";
 "register_view_register_button_label" = "Register";
+
+
+//MARK: ForgotPasswordView
+"forgot_password_view_title" = "Forgot Password";
+"forgot_password_view_email_input_label" = "Email";
+"forgot_password_view_reset_button_label" = "Reset Password";

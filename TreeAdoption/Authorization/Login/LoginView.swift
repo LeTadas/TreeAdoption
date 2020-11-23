@@ -13,7 +13,7 @@ struct LoginView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.top, 8)
                 HStack {
-                    Button(action: viewModel.forgotPasswordPressed) {
+                    NavigationLink(destination: ForgotPasswordView()) {
                         Text("login_view_forgot_password_button_label")
                             .font(.system(size: 14, weight: .bold))
                             .foregroundColor(.accentColor)
@@ -30,8 +30,11 @@ struct LoginView: View {
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)
-            DefaultButton(titleKey: "Login", action: viewModel.loginPressed)
-                .padding(.top, 24)
+            DefaultButton(
+                titleKey: "login_view_login_button_label",
+                action: viewModel.loginPressed
+            )
+            .padding(.top, 24)
         }
         .navigationBarTitle("login_view_title")
     }
