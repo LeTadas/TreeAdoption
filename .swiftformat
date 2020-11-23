@@ -1,0 +1,8 @@
+# format options
+
+--commas false
+--indentcase true
+
+# file options
+
+--exclude Pods,Generated

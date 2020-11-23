@@ -1,0 +1,21 @@
+excluded:
+  - Pods
+  - vendor
+
+disabled_rules:
+  - force_cast
+  - identifier_name  # Only allows names with 3-40 characters
+  - type_name        # Only allows names with 3-40 characters
+  - line_length      # Laat me
+  - file_length      # Has max limit of 400 lines, which is bull for tests
+  - type_body_length # Has max limit of 200 source lines, which is bull for tests
+  - function_body_length # Has max limit of 40 source lines, which is common practice and has valid violations
+  - switch_case_alignment # Our formatter explicitly indents this
+  - force_try
+  - function_parameter_count
+  - nesting
+  - redundant_string_enum_value # Removing type results in compiler error
+  - cyclomatic_complexity # We'll handle this during code review
+  - opening_brace
+  - multiple_closures_with_trailing_closure
+  - todo
