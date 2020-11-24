@@ -16,7 +16,7 @@ struct TreeAdoptionApp: App {
                 case .onboarding:
                     OnboardingView()
                 case .main:
-                    EmptyView()
+                    MainTabView()
             }
         }
     }
@@ -30,7 +30,7 @@ private class LauncherViewListener: LauncherViewEvents {
     }
 
     func onAuthenticated() {
-        viewModel.onUnauthenticated()
+        viewModel.onAuthenticated()
     }
 
     func onUnauthenticated() {

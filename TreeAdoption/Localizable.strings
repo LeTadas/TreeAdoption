@@ -26,3 +26,8 @@
 "forgot_password_view_title" = "Forgot Password";
 "forgot_password_view_email_input_label" = "Email";
 "forgot_password_view_reset_button_label" = "Reset Password";
+
+//MARK: MainTabView
+"main_tab_view_my_trees_label" = "My Trees";
+"main_tab_view_news_label" = "News";
+"main_tab_view_profile_label" = "Profile";
