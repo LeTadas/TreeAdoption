@@ -16,6 +16,6 @@ class LauncherViewModel: ObservableObject {
 
 extension LauncherViewModel {
     func onAppear() {
-		listener.onAuthenticated()
-	}
+        listener.onAuthenticated()
+    }
 }
