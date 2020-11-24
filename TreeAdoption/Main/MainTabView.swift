@@ -3,13 +3,12 @@ import SwiftUI
 struct MainTabView: View {
     init() {
         UITabBar.appearance().unselectedItemTintColor = UIColor(named: "primaryGray")
-        UITabBar.appearance().backgroundColor = .white
-        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().barTintColor = .white
     }
 
     var body: some View {
         TabView {
-            Text("FirstView")
+            MyTreesView()
                 .tabItem {
                     Image(systemName: "leaf.fill")
                     Text("main_tab_view_my_trees_label")
