@@ -1,3 +1,6 @@
+//MARK: LauncherView
+"launcher_view_title" = "A tree today, a forest tomorrow";
+
 //MARK: OnboardingView
 "onboarding_view_title" = "A tree today, a forest tomorrow";
 "onboarding_view_begin_button_title" = "Let's Begin";
