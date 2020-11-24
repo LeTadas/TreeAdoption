@@ -105,9 +105,9 @@ struct TreeViewItem: View {
                     .placeholder {
                         Rectangle().foregroundColor(.primaryGray)
                     }
-					.scaledToFill()
+                    .scaledToFill()
                     .frame(width: 72, height: 72)
-					.clipped()
+                    .clipped()
                     .cornerRadius(20)
                     .transition(.fade(duration: 0.5))
                 VStack(alignment: .leading) {
