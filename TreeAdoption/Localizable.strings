@@ -31,3 +31,10 @@
 "main_tab_view_my_trees_label" = "My Trees";
 "main_tab_view_news_label" = "News";
 "main_tab_view_profile_label" = "Profile";
+
+//MARK: MyTreesView
+"my_trees_view_title" = "My Trees";
+"my_trees_view_adopt_button_title" = "Adopt a Tree";
+"my_trees_view_empty_state_label" = "You haven't adopted any trees yet...";
+"my_trees_view_network_error_title" = "Oops";
+"my_trees_view_network_error_message" = "Network error occured please try again later.";
