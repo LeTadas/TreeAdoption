@@ -9,6 +9,17 @@ enum MyTreesState {
 }
 
 class MyTreesViewModel: ObservableObject {
+    private let webTreeOverviewProvider: TreeOverviewProvider
+    private var bag = Set<AnyCancellable>()
+
+    init(_ webTreeOverviewProvider: TreeOverviewProvider) {
+        self.webTreeOverviewProvider = webTreeOverviewProvider
+    }
+
+    deinit {
+        bag.removeAll()
+    }
+
     @Published var state: MyTreesState = .loaded(
         [
             TreeOverview(id: 0, name: "White oak", imageUrl: "https://www.fillmurray.com/200/300", humidity: 12.3, temperature: 1.2, lenght: 120),
@@ -19,6 +30,13 @@ class MyTreesViewModel: ObservableObject {
 
 extension MyTreesViewModel {
     func adoptTreePressed() {}
+    func onAppear() {
+        webTreeOverviewProvider.getTreeOverview()
+            .sink { value in
+                print(value)
+            }
+            .store(in: &bag)
+    }
 }
 
 struct TreeOverview {

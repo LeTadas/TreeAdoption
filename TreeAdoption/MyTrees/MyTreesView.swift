@@ -2,7 +2,7 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct MyTreesView: View {
-    @ObservedObject var viewModel = MyTreesViewModel()
+    @ObservedObject var viewModel = MyTreesViewModel(DefaultTreeOverviewProvider(NetworkClient()))
 
     init() {
         UINavigationBar.appearance().barTintColor = .white
@@ -27,7 +27,9 @@ struct MyTreesView: View {
                     action: viewModel.adoptTreePressed
                 )
                 .padding(.bottom, 24)
-            }.navigationBarTitle("my_trees_view_title", displayMode: .inline)
+            }
+            .navigationBarTitle("my_trees_view_title", displayMode: .inline)
+            .onAppear(perform: viewModel.onAppear)
         }
     }
 }
