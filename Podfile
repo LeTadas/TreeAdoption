@@ -6,6 +6,7 @@ target 'TreeAdoption' do
   use_frameworks!
 
   # Pods for TreeAdoption
+	pod 'SDWebImageSwiftUI'
 
 end
 
