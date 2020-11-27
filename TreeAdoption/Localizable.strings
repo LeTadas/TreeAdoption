@@ -38,3 +38,9 @@
 "my_trees_view_empty_state_label" = "You haven't adopted any trees yet...";
 "my_trees_view_network_error_title" = "Oops";
 "my_trees_view_network_error_message" = "Network error occured please try again later.";
+
+//MARK: NewsView
+"news_view_title" = "News";
+"news_view_network_error_title" = "Oops";
+"news_view_network_error_message" = "Network error occured please try again later.";
+"news_view_no_news_message" = "Oh snap! No content here.";

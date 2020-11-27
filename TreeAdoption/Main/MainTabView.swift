@@ -13,7 +13,7 @@ struct MainTabView: View {
                     Image(systemName: "leaf.fill")
                     Text("main_tab_view_my_trees_label")
                 }
-            Text("SecondView")
+            NewsView()
                 .tabItem {
                     Image(systemName: "newspaper.fill")
                     Text("main_tab_view_news_label")
