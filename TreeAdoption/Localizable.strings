@@ -50,3 +50,4 @@
 "adopt_tree_view_network_error_title" = "Oops";
 "adopt_tree_view_network_error_message" = "Network error occured please try again later.";
 "adopt_tree_view_done_button_title" = "Done";
+"adopt_tree_view_no_trees_found_message" = "Oh snap! There is no trees available for adoption.";
