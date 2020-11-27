@@ -14,13 +14,16 @@ struct MyTreesView: View {
                 Color.backgroundGray
                 switch viewModel.state {
                     case .loading:
-                        LoadingView()
+                        DefaultLoadingView()
                     case let .loaded(items):
                         TreeList(items: items)
                     case .empty:
                         NoTreesView()
                     case .error:
-                        ErrorView()
+                        DefaultErrorView(
+                            titleKey: "my_trees_view_network_error_title",
+                            messageKey: "my_trees_view_network_error_message"
+                        )
                 }
                 DefaultButton(
                     titleKey: "my_trees_view_adopt_button_title",
@@ -28,26 +31,6 @@ struct MyTreesView: View {
                 )
                 .padding(.bottom, 24)
             }.navigationBarTitle("my_trees_view_title", displayMode: .inline)
-        }
-    }
-}
-
-struct ErrorView: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            VStack {
-                Text("my_trees_view_network_error_title")
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundColor(.primaryGray)
-                Text("my_trees_view_network_error_message")
-                    .font(.system(size: 16, weight: .regular))
-                    .foregroundColor(.primaryGray)
-                    .lineLimit(2)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
-            }
-            Spacer()
         }
     }
 }
@@ -63,16 +46,6 @@ struct NoTreesView: View {
                     .foregroundColor(.primaryGray)
                     .padding(.top, 32)
             }
-            Spacer()
-        }
-    }
-}
-
-struct LoadingView: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            ProgressView()
             Spacer()
         }
     }
