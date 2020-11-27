@@ -1,7 +1,11 @@
 import SwiftUI
 
 struct NewsView: View {
-    @ObservedObject var viewModel = NewsViewModel()
+    @ObservedObject var viewModel = NewsViewModel(
+        DefaultNewsProvider(
+            NetworkClient()
+        )
+    )
 
     var body: some View {
         NavigationView {
@@ -26,6 +30,8 @@ struct NewsView: View {
             }
             .navigationBarTitle("news_view_title", displayMode: .inline)
         }
+        .onAppear(perform: viewModel.onAppear)
+        .onDisappear(perform: viewModel.onDisappear)
     }
 }
 
