@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct AdoptTreeView: View {
-    @ObservedObject var viewModel = AdoptTreeViewModel()
+    @ObservedObject var viewModel = AdoptTreeViewModel(
+        DefaultAvailableTreesForAdoptionProvider(NetworkClient())
+    )
+
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -13,7 +16,14 @@ struct AdoptTreeView: View {
                     case .loading:
                         DefaultLoadingView()
                     case let .loaded(items):
-                        AdoptTreeList(items: items)
+                        if items.isEmpty {
+                            DefaultEmptyView(
+                                imageSystemName: "magnifyingglass",
+                                message: "adopt_tree_view_no_trees_found_message"
+                            )
+                        } else {
+                            AdoptTreeList(items: items)
+                        }
                     case .error:
                         DefaultErrorView(
                             titleKey: "adopt_tree_view_network_error_title",
@@ -28,6 +38,8 @@ struct AdoptTreeView: View {
                     titleKey: "adopt_tree_view_done_button_title"
                 )
             )
+            .onAppear(perform: viewModel.onAppear)
+            .onDisappear(perform: viewModel.onDisappear)
         }
     }
 }
@@ -53,13 +65,17 @@ struct AdoptTreeViewItem: View {
 
     var body: some View {
         ZStack {
-            HStack {
-                Image("ic_tree")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 72, height: 72)
-                    .clipped()
-                    .cornerRadius(20)
+            HStack(alignment: .center, spacing: 0) {
+                ZStack(alignment: .center) {
+                    Circle()
+                        .fill(Color.primaryColor)
+                    getIconForCategory()
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                }
+                .frame(width: 60, height: 60)
+                .padding(.trailing, 16)
                 VStack(alignment: .leading) {
                     Text(item.name)
                         .lineLimit(1)
@@ -69,7 +85,9 @@ struct AdoptTreeViewItem: View {
                         .lineLimit(2)
                         .font(.system(size: 14, weight: .regular))
                         .foregroundColor(.textPrimary)
+                    Spacer()
                 }
+                Spacer()
             }
             .padding(16)
         }
@@ -81,6 +99,10 @@ struct AdoptTreeViewItem: View {
         )
         .padding(.top, 8)
         .padding(.bottom, 8)
+    }
+
+    private func getIconForCategory() -> Image {
+        return (item.category == 1) ? Image("ic_sapling") : Image("ic_mature_tree")
     }
 }
 
