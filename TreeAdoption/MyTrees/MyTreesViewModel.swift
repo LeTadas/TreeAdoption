@@ -26,10 +26,15 @@ class MyTreesViewModel: ObservableObject {
             TreeOverview(id: 1, name: "Birtch", imageUrl: "https://www.fillmurray.com/200/300", humidity: 12.3, temperature: 1.2, lenght: 120)
         ]
     )
+
+    @Published var showAdoptView: Bool = false
 }
 
 extension MyTreesViewModel {
-    func adoptTreePressed() {}
+    func adoptTreePressed() {
+        showAdoptView = true
+    }
+
     func onAppear() {
         webTreeOverviewProvider.getTreeOverview()
             .sink { value in
