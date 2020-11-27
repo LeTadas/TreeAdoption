@@ -44,3 +44,9 @@
 "news_view_network_error_title" = "Oops";
 "news_view_network_error_message" = "Network error occured please try again later.";
 "news_view_no_news_message" = "Oh snap! No content here.";
+
+//MARK: AdoptTreeView
+"adopt_tree_view_title" = "Available Trees";
+"adopt_tree_view_network_error_title" = "Oops";
+"adopt_tree_view_network_error_message" = "Network error occured please try again later.";
+"adopt_tree_view_done_button_title" = "Done";
