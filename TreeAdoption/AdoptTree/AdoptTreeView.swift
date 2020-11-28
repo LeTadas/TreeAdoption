@@ -57,7 +57,15 @@ struct AdoptTreeList: View {
         ScrollView {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
-                    NavigationLink(destination: AdoptTreeDetailsView(isPresented: $isPresented)) {
+                    NavigationLink(
+                        destination: AdoptTreeDetailsView(
+                            AdoptTreeDetailsViewModel(
+                                DefaultAvailableDetailsProvider(NetworkClient()),
+                                "\(item.id)"
+                            ),
+                            $isPresented
+                        )
+                    ) {
                         AdoptTreeViewItem(item: item)
                     }
                 }
