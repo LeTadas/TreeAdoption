@@ -11,16 +11,18 @@ struct NewsView: View {
         NavigationView {
             ZStack {
                 Color.backgroundGray
-                switch viewModel.newsState {
+                switch viewModel.state {
                     case .loading:
                         DefaultLoadingView()
                     case let .loaded(items):
-                        NewsListView(items: items)
-                    case .empty:
-                        DefaultEmptyView(
-                            imageSystemName: "newspaper",
-                            message: "news_view_no_news_message"
-                        )
+                        if items.isEmpty {
+                            DefaultEmptyView(
+                                imageSystemName: "newspaper",
+                                message: "news_view_no_news_message"
+                            )
+                        } else {
+                            NewsListView(items: items)
+                        }
                     case .error:
                         DefaultErrorView(
                             titleKey: "news_view_network_error_title",

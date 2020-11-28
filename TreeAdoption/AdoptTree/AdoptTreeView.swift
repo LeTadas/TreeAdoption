@@ -7,6 +7,11 @@ struct AdoptTreeView: View {
 
     @Binding var isPresented: Bool
 
+    init(isPresented: Binding<Bool>) {
+        _isPresented = isPresented
+        UINavigationBar.appearance().tintColor = UIColor(named: "primaryColor")
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,7 +27,7 @@ struct AdoptTreeView: View {
                                 message: "adopt_tree_view_no_trees_found_message"
                             )
                         } else {
-                            AdoptTreeList(items: items)
+                            AdoptTreeList(items: items, isPresented: $isPresented)
                         }
                     case .error:
                         DefaultErrorView(
@@ -46,12 +51,15 @@ struct AdoptTreeView: View {
 
 struct AdoptTreeList: View {
     let items: [AdoptTreeItem]
+    @Binding var isPresented: Bool
 
     var body: some View {
         ScrollView {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
-                    AdoptTreeViewItem(item: item)
+                    NavigationLink(destination: AdoptTreeDetailsView(isPresented: $isPresented)) {
+                        AdoptTreeViewItem(item: item)
+                    }
                 }
             }
             .padding(24)
