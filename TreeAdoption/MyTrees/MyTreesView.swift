@@ -16,9 +16,11 @@ struct MyTreesView: View {
                     case .loading:
                         DefaultLoadingView()
                     case let .loaded(items):
-                        TreeList(items: items)
-                    case .empty:
-                        NoTreesView()
+                        if items.isEmpty {
+                            NoTreesView()
+                        } else {
+                            TreeList(items: items)
+                        }
                     case .error:
                         DefaultErrorView(
                             titleKey: "my_trees_view_network_error_title",

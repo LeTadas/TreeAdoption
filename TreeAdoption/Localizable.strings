@@ -51,3 +51,13 @@
 "adopt_tree_view_network_error_message" = "Network error occured please try again later.";
 "adopt_tree_view_done_button_title" = "Done";
 "adopt_tree_view_no_trees_found_message" = "Oh snap! There is no trees available for adoption.";
+
+//MARK: AdoptTreeDetailsView
+"adopt_tree_details_view_title" = "Adopt the Tree";
+"adopt_tree_details_view_network_error_title" = "Oops";
+"adopt_tree_details_view_network_error_message" = "Network error occured please try again later.";
+"adopt_tree_details_view_stock_label" = "Stock";
+"adopt_tree_details_view_description_label" = "Description";
+"adopt_tree_details_view_adopt_button_label" = "Adopt this Tree";
+"adopt_tree_details_view_done_button_label" = "Done";
+"adopt_tree_details_view_price_label" = "Price %@";

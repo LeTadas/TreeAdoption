@@ -12,7 +12,7 @@ class AdoptTreeViewModel: ObservableObject {
         bag.removeAll()
     }
 
-    @Published var state: AdoptTreeState = .loading
+    @Published var state: ViewState<[AdoptTreeItem]> = .loading
 }
 
 extension AdoptTreeViewModel {
@@ -33,12 +33,6 @@ extension AdoptTreeViewModel {
     func onDisappear() {
         bag.removeAll()
     }
-}
-
-enum AdoptTreeState {
-    case loading
-    case loaded([AdoptTreeItem])
-    case error
 }
 
 struct AdoptTreeItem {

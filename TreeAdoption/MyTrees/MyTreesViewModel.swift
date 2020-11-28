@@ -1,13 +1,6 @@
 import Combine
 import Foundation
 
-enum MyTreesState {
-    case loading
-    case loaded([TreeOverview])
-    case empty
-    case error
-}
-
 class MyTreesViewModel: ObservableObject {
     private let webTreeOverviewProvider: TreeOverviewProvider
     private var bag = Set<AnyCancellable>()
@@ -20,7 +13,7 @@ class MyTreesViewModel: ObservableObject {
         bag.removeAll()
     }
 
-    @Published var state: MyTreesState = .loaded(
+    @Published var state: ViewState<[TreeOverview]> = .loaded(
         [
             TreeOverview(id: 0, name: "White oak", imageUrl: "https://www.fillmurray.com/200/300", humidity: 12.3, temperature: 1.2, lenght: 120),
             TreeOverview(id: 1, name: "Birtch", imageUrl: "https://www.fillmurray.com/200/300", humidity: 12.3, temperature: 1.2, lenght: 120)

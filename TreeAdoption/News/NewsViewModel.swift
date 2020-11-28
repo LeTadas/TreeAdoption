@@ -13,7 +13,7 @@ class NewsViewModel: ObservableObject {
         bag.removeAll()
     }
 
-    @Published var newsState: NewsState = .loading
+    @Published var state: ViewState<[NewsItem]> = .loading
 }
 
 extension NewsViewModel {
@@ -22,14 +22,10 @@ extension NewsViewModel {
             .sink { [unowned self] value in
                 switch value {
                     case let .success(result):
-                        if result.isEmpty {
-                            self.newsState = .empty
-                        } else {
-                            self.newsState = .loaded(result)
-                        }
+                        self.state = .loaded(result)
                     case let .failure(error):
                         print("Network error: \(error.localizedDescription)")
-                        self.newsState = .error
+                        self.state = .error
                 }
             }
             .store(in: &bag)
@@ -38,13 +34,6 @@ extension NewsViewModel {
     func onDisappear() {
         bag.removeAll()
     }
-}
-
-enum NewsState {
-    case loading
-    case loaded([NewsItem])
-    case error
-    case empty
 }
 
 struct NewsItem {
