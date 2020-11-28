@@ -1,7 +1,16 @@
+import Combine
 import SwiftUI
 
 struct AdoptTreeDetailsView: View {
-    @ObservedObject var viewModel = AdoptTreeDetailsViewModel()
+    init(
+        _ viewModel: AdoptTreeDetailsViewModel,
+        _ isPresented: Binding<Bool>
+    ) {
+        _isPresented = isPresented
+        self.viewModel = viewModel
+    }
+
+    @ObservedObject var viewModel: AdoptTreeDetailsViewModel
 
     @Binding var isPresented: Bool
 
@@ -33,6 +42,7 @@ struct AdoptTreeDetailsView: View {
                 titleKey: "adopt_tree_details_view_done_button_label"
             )
         )
+        .onAppear(perform: viewModel.onAppear)
     }
 }
 
@@ -44,6 +54,7 @@ struct DetailsView: View {
             Text(item.name)
                 .font(.system(size: 40, weight: .heavy))
                 .foregroundColor(.textPrimary)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .lineLimit(2)
             Text(formatCurrency())
                 .font(.system(size: 18, weight: .medium))
@@ -127,8 +138,14 @@ struct InfoCardView: View {
     }
 }
 
-struct AdoptTreeDetailsView_Previews: PreviewProvider {
+struct AdoptTreeDetailsViewPreviews: PreviewProvider {
     static var previews: some View {
-        AdoptTreeDetailsView(isPresented: .constant(true))
+        AdoptTreeDetailsView(AdoptTreeDetailsViewModel(PreviewProvider(), ""), .constant(true))
+    }
+
+    fileprivate class PreviewProvider: AvailableDetailsProvider {
+        func getDetails(id _: String) -> AnyPublisher<Result<AdoptTreeDetails, RequestError>, Never> {
+            return Just(Result.failure(.genericError(NSError()))).eraseToAnyPublisher()
+        }
     }
 }
