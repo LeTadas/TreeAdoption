@@ -32,7 +32,8 @@ struct LoginView: View {
             .padding(.trailing, 24)
             DefaultButton(
                 titleKey: "login_view_login_button_label",
-                action: viewModel.loginPressed
+                action: viewModel.loginPressed,
+                disabled: .constant(false)
             )
             .padding(.top, 24)
         }

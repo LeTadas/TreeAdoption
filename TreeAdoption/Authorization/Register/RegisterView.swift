@@ -20,7 +20,8 @@ struct RegisterView: View {
             .padding(.trailing, 24)
             DefaultButton(
                 titleKey: "register_view_register_button_label",
-                action: viewModel.registerPressed
+                action: viewModel.registerPressed,
+                disabled: .constant(false)
             )
             .padding(.top, 24)
             Spacer()
