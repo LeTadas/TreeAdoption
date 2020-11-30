@@ -12,7 +12,8 @@ struct ForgotPasswordView: View {
                 .padding(.trailing, 24)
             DefaultButton(
                 titleKey: "forgot_password_view_reset_button_label",
-                action: viewModel.restPressed
+                action: viewModel.restPressed,
+                disabled: .constant(false)
             )
             .padding(.top, 24)
             Spacer()

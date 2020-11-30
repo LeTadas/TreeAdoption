@@ -29,7 +29,8 @@ struct MyTreesView: View {
                 }
                 DefaultButton(
                     titleKey: "my_trees_view_adopt_button_title",
-                    action: viewModel.adoptTreePressed
+                    action: viewModel.adoptTreePressed,
+                    disabled: .constant(false)
                 )
                 .padding(.bottom, 24)
             }

@@ -29,11 +29,20 @@ struct AdoptTreeDetailsView: View {
                         messageKey: "adopt_tree_details_view_network_error_message"
                     )
             }
-            DefaultButton(
-                titleKey: "adopt_tree_details_view_adopt_button_label",
-                action: viewModel.adoptThisTreePressed
-            )
-            .padding(.bottom, 24)
+            NavigationLink(destination: PersonalizeTreeView(isPresented: $isPresented)) {
+                ZStack {
+                    Rectangle()
+                        .fill(Color("primaryColor"))
+                        .cornerRadius(20)
+                    HStack {
+                        Text("adopt_tree_details_view_adopt_button_label")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+                }
+                .frame(width: 220, height: 40)
+                .padding(.bottom, 24)
+            }
         }
         .navigationBarTitle("adopt_tree_details_view_title", displayMode: .inline)
         .navigationBarItems(

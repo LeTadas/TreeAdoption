@@ -61,3 +61,12 @@
 "adopt_tree_details_view_adopt_button_label" = "Adopt this Tree";
 "adopt_tree_details_view_done_button_label" = "Done";
 "adopt_tree_details_view_price_label" = "Price %@";
+
+//MARK: PersonalizeTree
+"personalize_tree_view_title" = "Personalize";
+"personalize_tree_view_done_button_label" = "Done";
+"personalize_tree_view_tree_name_label" = "Name your tree";
+"personalize_tree_view_add_personal_sign_label" = "Add Personal Sign";
+"personalize_tree_view_adopt_button_title" = "Continue";
+"personalize_tree_view_your_text_label" = "Your Text";
+"personalize_tree_view_sign_description" = "Personal sign can be added to newly planted tree.";
