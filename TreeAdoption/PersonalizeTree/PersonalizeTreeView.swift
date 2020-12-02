@@ -1,9 +1,10 @@
+import Combine
 import SwiftUI
 
 struct PersonalizeTreeView: View {
     @Binding var isPresented: Bool
 
-    @ObservedObject var viewModel = PersonalizeTreeViewModel()
+    @ObservedObject var viewModel: PersonalizeTreeViewModel
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -84,8 +85,20 @@ struct PersonalizeTreeView: View {
     }
 }
 
-struct PersonalizeTreeView_Previews: PreviewProvider {
+struct PersonalizeTreeViewPreviews: PreviewProvider {
     static var previews: some View {
-        PersonalizeTreeView(isPresented: .constant(true))
+        PersonalizeTreeView(
+            isPresented: .constant(true),
+            viewModel: PersonalizeTreeViewModel(
+                PreviewProvider(),
+                "1"
+            )
+        )
+    }
+
+    private class PreviewProvider: CreateOrderInteractor {
+        func createOrder(userId _: Int, productId _: Int) -> AnyPublisher<Result<WebCreateOrderResponse, RequestError>, Never> {
+            return Just(Result.failure(.genericError(NSError()))).eraseToAnyPublisher()
+        }
     }
 }

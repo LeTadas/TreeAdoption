@@ -29,7 +29,15 @@ struct AdoptTreeDetailsView: View {
                         messageKey: "adopt_tree_details_view_network_error_message"
                     )
             }
-            NavigationLink(destination: PersonalizeTreeView(isPresented: $isPresented)) {
+            NavigationLink(
+                destination: PersonalizeTreeView(
+                    isPresented: $isPresented,
+                    viewModel: PersonalizeTreeViewModel(
+                        DefaultCreateOrderInteractor(NetworkClient()),
+                        viewModel.productId
+                    )
+                )
+            ) {
                 ZStack {
                     Rectangle()
                         .fill(Color("primaryColor"))
