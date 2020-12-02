@@ -2,7 +2,7 @@ import Combine
 
 class AdoptTreeDetailsViewModel: ObservableObject {
     private let availableDetailsProvider: AvailableDetailsProvider
-    private let productId: String
+    let productId: String
     private var bag = Set<AnyCancellable>()
 
     init(

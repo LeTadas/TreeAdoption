@@ -32,9 +32,7 @@ class DefaultCreateOrderInteractor: CreateOrderInteractor {
             ]
         )
 
-        guard let jsonData = try? JSONSerialization.data(
-            withJSONObject: newOrder, options: []
-        ) else {
+        guard let jsonData = try? JSONEncoder().encode(newOrder) else {
             fatalError("Could not serialize json body DefaultCreateOrderInteractor")
         }
 

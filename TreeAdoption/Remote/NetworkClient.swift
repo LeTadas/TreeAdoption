@@ -5,8 +5,9 @@ class NetworkClient {
     func execute<T: Decodable>(url: URLRequest) -> AnyPublisher<Result<T, RequestError>, Never> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap { element -> Data in
-                guard let httpResponse = element.response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200
+                guard
+                    let httpResponse = element.response as? HTTPURLResponse,
+                    (200 ... 300).contains(httpResponse.statusCode)
                 else {
                     throw URLError(.badServerResponse)
                 }
