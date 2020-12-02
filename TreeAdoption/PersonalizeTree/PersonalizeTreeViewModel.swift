@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 class PersonalizeTreeViewModel: ObservableObject {
     private let createOrderInteractor: CreateOrderInteractor
@@ -22,6 +23,9 @@ class PersonalizeTreeViewModel: ObservableObject {
 
     @Published var signTitle: String = ""
     @Published var continueDisabled: Bool = true
+    @Published var showPayment: Bool = false
+
+    var paymentLink: String = "https://www.google.com/"
 
     func updateButton() {
         continueDisabled = treeName.isEmpty
@@ -30,17 +34,17 @@ class PersonalizeTreeViewModel: ObservableObject {
 
 extension PersonalizeTreeViewModel {
     func adoptThisTreePressed() {
-
-		guard let id = Int(productId) else {
-			return
-		}
+        guard let id = Int(productId) else {
+            return
+        }
 
         orderCancelable = createOrderInteractor
             .createOrder(userId: 1, productId: id)
-            .sink { value in
+            .sink { [unowned self] value in
                 switch value {
                     case let .success(result):
-                        print("Success: \(result)")
+                        self.paymentLink = result.paymentLink
+                        self.showPayment = true
                     case let .failure(error):
                         print("Error: \(error.localizedDescription)")
                 }
