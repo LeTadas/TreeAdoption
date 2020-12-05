@@ -2,7 +2,12 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct MyTreesView: View {
-    @ObservedObject var viewModel = MyTreesViewModel(DefaultTreeOverviewProvider(NetworkClient()))
+    @ObservedObject var viewModel = MyTreesViewModel(
+        DefaultMyTreeProvider(
+            FakeTelemetryProvider(),
+            DefaultTreeOverviewProvider(NetworkClient())
+        )
+    )
 
     init() {
         UINavigationBar.appearance().barTintColor = .white
@@ -60,7 +65,7 @@ struct NoTreesView: View {
 }
 
 struct TreeList: View {
-    let items: [TreeOverview]
+    let items: [TreeSummary]
 
     var body: some View {
         ScrollView {
@@ -76,7 +81,7 @@ struct TreeList: View {
 }
 
 struct TreeViewItem: View {
-    let item: TreeOverview
+    let item: TreeSummary
 
     var body: some View {
         ZStack {

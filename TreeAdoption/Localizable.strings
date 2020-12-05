@@ -70,3 +70,7 @@
 "personalize_tree_view_adopt_button_title" = "Continue";
 "personalize_tree_view_your_text_label" = "Your Text";
 "personalize_tree_view_sign_description" = "Personal sign can be added to newly planted tree.";
+
+//MARK: PaymentView
+"payment_view_title" = "Payment";
+"payment_view_cancel_button_label" = "Cancel";

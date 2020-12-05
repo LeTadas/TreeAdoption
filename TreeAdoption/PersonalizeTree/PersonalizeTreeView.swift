@@ -74,6 +74,14 @@ struct PersonalizeTreeView: View {
                 disabled: $viewModel.continueDisabled
             )
             .padding(.bottom, 24)
+            NavigationLink(
+                "",
+                destination: PaymentView(
+                    isPresented: $isPresented,
+                    paymentLink: viewModel.paymentLink
+                ),
+                isActive: $viewModel.showPayment
+            )
         }
         .navigationBarTitle("personalize_tree_view_title", displayMode: .inline)
         .navigationBarItems(
