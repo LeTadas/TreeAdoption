@@ -21,6 +21,7 @@ class DefaultTreeOverviewProvider: TreeOverviewProvider {
 
         let urlRequest = URLRequest(url: requestUrl)
 
-        return networkClient.execute(url: urlRequest).eraseToAnyPublisher()
+        return networkClient.execute(url: urlRequest)
+            .eraseToAnyPublisher()
     }
 }
