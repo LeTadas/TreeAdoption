@@ -2,9 +2,7 @@ import SwiftUI
 
 struct NewsView: View {
     @ObservedObject var viewModel = NewsViewModel(
-        DefaultNewsProvider(
-            NetworkClient()
-        )
+        FakeNewsProvider()
     )
 
     var body: some View {
@@ -47,8 +45,7 @@ struct NewsListView: View {
                     NewsViewItem(item: item)
                 }
             }
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
+            .padding(24)
         }
     }
 }
