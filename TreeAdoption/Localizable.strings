@@ -71,6 +71,19 @@
 "personalize_tree_view_your_text_label" = "Your Text";
 "personalize_tree_view_sign_description" = "Personal sign can be added to newly planted tree.";
 
+//MARK: ProfileView
+"profile_view_title" = "Profile";
+"profile_view_logged_in_as" = "Logged in as %@";
+"profile_view_goal_title" = "Keep it up!";
+"profile_view_goal_message" = "This month your trees hit the records in reducing CO2 from environment";
+"profile_view_settings_visits_header_label" = "Visits";
+"profile_view_settings_visits_row_label" = "My Visits";
+"profile_view_settings_profile_header_label" = "Profile";
+"profile_view_settings_change_email_row_label" = "Change Email Address";
+"profile_view_settings_change_password_row_label" = "Change Password";
+"profile_view_settings_delete_account_row_label" = "Delete Account";
+"profile_view_settings_logout_row_label" = "Log out";
+
 //MARK: PaymentView
 "payment_view_title" = "Payment";
 "payment_view_cancel_button_label" = "Cancel";

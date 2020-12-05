@@ -18,7 +18,7 @@ struct MainTabView: View {
                     Image(systemName: "newspaper.fill")
                     Text("main_tab_view_news_label")
                 }
-            Text("ThirdView")
+            ProfileView(viewModel: ProfileViewModel(User(id: 1, email: "test@gmail.com")))
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("main_tab_view_profile_label")
