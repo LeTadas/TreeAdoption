@@ -1,8 +1,13 @@
+import Firebase
 import SwiftUI
 
 @main
 struct TreeAdoptionApp: App {
     @ObservedObject var viewModel = AppViewModel()
+
+    init() {
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {

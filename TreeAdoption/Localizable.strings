@@ -63,7 +63,7 @@
 "adopt_tree_details_view_price_label" = "Price %@";
 
 //MARK: PersonalizeTree
-"personalize_tree_view_title" = "Personalize";
+"personalize_tree_view_title" = "Personalise";
 "personalize_tree_view_done_button_label" = "Done";
 "personalize_tree_view_tree_name_label" = "Name your tree";
 "personalize_tree_view_add_personal_sign_label" = "Add Personal Sign";
@@ -87,3 +87,17 @@
 //MARK: PaymentView
 "payment_view_title" = "Payment";
 "payment_view_cancel_button_label" = "Cancel";
+
+
+//MARK: TreeDetailsView
+"tree_details_view_adoption_contract_ends_label" = "Adoption contract ends: %@";
+"tree_details_view_gallery_label" = "Gallery";
+"tree_details_view_tree_location_label" = "Tree location";
+"tree_details_view_animals_detected_label" = "Animals detected";
+"tree_details_view_animals_detected_description_label" = "Animals in the forest is a sign of healthy environment. Near this tree we detected these animals:";
+"tree_details_view_health_condition_label" = "Health condition";
+"tree_details_view_health_condition_severity_label" = "Severity";
+"tree_details_view_health_condition_last_updated_at" = "Last updated %@";
+"tree_details_view_carbon_dioxide_view_label" = "Carbon Dioxide Consumption";
+"tree_details_view_temperature_label" = "Temperature";
+"tree_details_view_humidity_label" = "Humidity";
