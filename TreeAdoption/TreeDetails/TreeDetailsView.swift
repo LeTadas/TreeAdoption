@@ -25,6 +25,20 @@ struct TreeDetailsView: View {
                     )
             }
         }
+        .navigationBarItems(
+            trailing:
+            HStack {
+                Button(action: viewModel.showTimeline) {
+                    Image(systemName: "timeline.selection")
+                }
+            }
+        )
+        .sheet(isPresented: $viewModel.timelineIsVisible) {
+            TimelineView(
+                viewModel: TimelineViewModel(FakeTimelineProvider()),
+                isPresented: $viewModel.timelineIsVisible
+            )
+        }
     }
 }
 
@@ -376,14 +390,6 @@ struct CardTitleView: View {
             .font(.system(size: 16, weight: .heavy))
             .foregroundColor(Color.textPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-struct CardBackground: View {
-    var body: some View {
-        Rectangle()
-            .fill(Color.white)
-            .cornerRadius(20)
     }
 }
 

@@ -13,14 +13,12 @@
 "login_view_no_account_button_label" = "I don't have an account";
 "login_view_login_button_label" = "Login";
 
-
 //MARK: RegisterView
 "register_view_title" = "Register";
 "register_view_email_input_label" = "Email";
 "register_view_password_input_label" = "Password";
 "register_view_repeat_password_input_label" = "Repeat Password";
 "register_view_register_button_label" = "Register";
-
 
 //MARK: ForgotPasswordView
 "forgot_password_view_title" = "Forgot Password";
@@ -37,25 +35,25 @@
 "my_trees_view_adopt_button_title" = "Adopt a Tree";
 "my_trees_view_empty_state_label" = "You haven't adopted any trees yet...";
 "my_trees_view_network_error_title" = "Oops";
-"my_trees_view_network_error_message" = "Network error occured please try again later.";
+"my_trees_view_network_error_message" = "Network error occurred please try again later.";
 
 //MARK: NewsView
 "news_view_title" = "News";
 "news_view_network_error_title" = "Oops";
-"news_view_network_error_message" = "Network error occured please try again later.";
+"news_view_network_error_message" = "Network error occurred please try again later.";
 "news_view_no_news_message" = "Oh snap! No content here.";
 
 //MARK: AdoptTreeView
 "adopt_tree_view_title" = "Available Trees";
 "adopt_tree_view_network_error_title" = "Oops";
-"adopt_tree_view_network_error_message" = "Network error occured please try again later.";
+"adopt_tree_view_network_error_message" = "Network error occurred please try again later.";
 "adopt_tree_view_done_button_title" = "Done";
 "adopt_tree_view_no_trees_found_message" = "Oh snap! There is no trees available for adoption.";
 
 //MARK: AdoptTreeDetailsView
 "adopt_tree_details_view_title" = "Adopt the Tree";
 "adopt_tree_details_view_network_error_title" = "Oops";
-"adopt_tree_details_view_network_error_message" = "Network error occured please try again later.";
+"adopt_tree_details_view_network_error_message" = "Network error occurred please try again later.";
 "adopt_tree_details_view_stock_label" = "Stock";
 "adopt_tree_details_view_description_label" = "Description";
 "adopt_tree_details_view_adopt_button_label" = "Adopt this Tree";
@@ -101,3 +99,13 @@
 "tree_details_view_carbon_dioxide_view_label" = "Carbon Dioxide Consumption";
 "tree_details_view_temperature_label" = "Temperature";
 "tree_details_view_humidity_label" = "Humidity";
+
+//MARK: NewsDetailsView
+"news_details_view_network_error_title" = "Oops";
+"news_details_view_network_error_description" = "Network error occurred please try again later.";
+
+//MARK: TimelineView
+"timeline_view_title" = "Timeline";
+"timeline_view_network_error_title" = "Oops";
+"timeline_view_network_error_description" = "Network error occurred please try again later.";
+"timeline_view_done_button_title" = "Done";
