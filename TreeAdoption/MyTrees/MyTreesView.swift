@@ -71,7 +71,9 @@ struct TreeList: View {
         ScrollView {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
-                    TreeViewItem(item: item)
+                    NavigationLink(destination: TreeDetailsView()) {
+                        TreeViewItem(item: item)
+                    }
                 }
             }
             .padding(24)

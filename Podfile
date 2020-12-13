@@ -7,6 +7,7 @@ target 'TreeAdoption' do
 
   # Pods for TreeAdoption
 	pod 'SDWebImageSwiftUI'
+	pod 'Firebase/Messaging'
 
 end
 
