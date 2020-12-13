@@ -42,7 +42,11 @@ struct NewsListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
-                    NewsViewItem(item: item)
+                    NavigationLink(
+                        destination: NewsDetailsView(viewModel: NewsDetailsViewModel(FakeNewsDetailsProvider(), item.id))
+                    ) {
+                        NewsViewItem(item: item)
+                    }
                 }
             }
             .padding(24)
