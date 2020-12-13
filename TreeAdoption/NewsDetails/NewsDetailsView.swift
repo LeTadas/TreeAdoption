@@ -13,8 +13,8 @@ struct NewsDetailsView: View {
                     NewsDetailsScrollView(item: result)
                 case .error:
                     DefaultErrorView(
-                        titleKey: "news_view_network_error_title",
-                        messageKey: "news_view_network_error_message"
+                        titleKey: "news_details_view_network_error_title",
+                        messageKey: "news_details_view_network_error_description"
                     )
             }
         }

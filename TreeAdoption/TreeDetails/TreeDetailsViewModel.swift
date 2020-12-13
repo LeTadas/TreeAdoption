@@ -3,6 +3,8 @@ import Foundation
 import MapKit
 
 class TreeDetailsViewModel: ObservableObject {
+    @Published var timelineIsVisible: Bool = false
+
     @Published var treeRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 52.083690,
@@ -69,6 +71,12 @@ class TreeDetailsViewModel: ObservableObject {
             temperature: 18
         )
     )
+}
+
+extension TreeDetailsViewModel {
+    func showTimeline() {
+        timelineIsVisible = true
+    }
 }
 
 struct TreeDetails {
