@@ -3,7 +3,7 @@ import Foundation
 import MapKit
 
 class TreeDetailsViewModel: ObservableObject {
-    @Published var timelineIsVisible: Bool = false
+    @Published var sheetVisible: Bool = false
 
     @Published var treeRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -71,11 +71,24 @@ class TreeDetailsViewModel: ObservableObject {
             temperature: 18
         )
     )
+
+    @Published var sheetView: DetailsSheetView = .timeline
+}
+
+enum DetailsSheetView {
+    case timeline
+    case bookATour
 }
 
 extension TreeDetailsViewModel {
     func showTimeline() {
-        timelineIsVisible = true
+        sheetView = .timeline
+        sheetVisible = true
+    }
+
+    func showBookATour() {
+        sheetView = .bookATour
+        sheetVisible = true
     }
 }
 

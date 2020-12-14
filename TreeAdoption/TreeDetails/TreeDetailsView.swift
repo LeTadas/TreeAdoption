@@ -31,13 +31,21 @@ struct TreeDetailsView: View {
                 Button(action: viewModel.showTimeline) {
                     Image(systemName: "timeline.selection")
                 }
+                Button(action: viewModel.showBookATour) {
+                    Image(systemName: "ticket")
+                }
             }
         )
-        .sheet(isPresented: $viewModel.timelineIsVisible) {
-            TimelineView(
-                viewModel: TimelineViewModel(FakeTimelineProvider()),
-                isPresented: $viewModel.timelineIsVisible
-            )
+        .sheet(isPresented: $viewModel.sheetVisible) {
+            switch viewModel.sheetView {
+                case .timeline:
+                    TimelineView(
+                        viewModel: TimelineViewModel(FakeTimelineProvider()),
+                        isPresented: $viewModel.sheetVisible
+                    )
+                case .bookATour:
+                    ScheduleVisitView(isPresented: $viewModel.sheetVisible)
+            }
         }
     }
 }

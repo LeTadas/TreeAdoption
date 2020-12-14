@@ -109,3 +109,12 @@
 "timeline_view_network_error_title" = "Oops";
 "timeline_view_network_error_description" = "Network error occurred please try again later.";
 "timeline_view_done_button_title" = "Done";
+
+//MARK: ScheduleVisitView
+"schedule_visit_view_title" = "Available Visits";
+"schedule_visit_view_view_on_map_button_title" = "View On Map";
+"schedule_visit_view_done_button_title" = "Done";
+"schedule_visit_view_about_guide_title" = "About Guide";
+"schedule_visit_view_network_error_title" = "Oops";
+"schedule_visit_view_network_error_description" = "Network error occurred please try again later.";
+"schedule_visit_view_schedule_button_title" = "Schedule";
