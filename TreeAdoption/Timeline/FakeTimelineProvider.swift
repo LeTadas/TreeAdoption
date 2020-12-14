@@ -48,7 +48,7 @@ class FakeTimelineProvider: TimelineProvider {
             )
         )
         .receive(on: DispatchQueue.main)
-        .delay(for: 2, scheduler: RunLoop.main)
+        .delay(for: 0.5, scheduler: RunLoop.main)
         .eraseToAnyPublisher()
     }
 
