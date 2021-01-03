@@ -4,6 +4,7 @@ import SwiftUI
 @main
 struct TreeAdoptionApp: App {
     @ObservedObject var viewModel = AppViewModel()
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
         FirebaseApp.configure()

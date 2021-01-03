@@ -24,6 +24,7 @@ class DefaultCreateOrderInteractor: CreateOrderInteractor {
 
         let newOrder = NewOrderRequest(
             userId: userId,
+            paymentRedirectLink: "mollie-app://payment-return",
             orderLines: [
                 OrderLine(
                     productId: productId,

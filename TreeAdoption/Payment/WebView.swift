@@ -56,14 +56,35 @@ public struct WebView: View, UIViewRepresentable {
         return UIViewContainerView()
     }
 
-    public func updateUIView(_ uiView: WebView.UIViewType, context _: UIViewRepresentableContext<WebView>) {
+    public func updateUIView(_ uiView: WebView.UIViewType, context: UIViewRepresentableContext<WebView>) {
         if uiView.contentView !== webView {
             uiView.contentView = webView
+            webView.uiDelegate = context.coordinator
         }
+    }
+
+    public func makeCoordinator() -> Coordinator {
+        return Coordinator(webView)
     }
 }
 
-public class UIViewContainerView<ContentView: UIView>: UIView {
+public class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate {
+    var parent: WKWebView
+
+    init(_ parent: WKWebView) {
+        self.parent = parent
+    }
+
+    public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation _: WKNavigation!) {
+        guard let url = webView.url?.absoluteString else {
+            print("NO URL")
+            return
+        }
+        print(url)
+    }
+}
+
+public class UIViewContainerView<ContentView: UIView>: UIView, WKNavigationDelegate {
     var contentView: ContentView? {
         willSet {
             contentView?.removeFromSuperview()

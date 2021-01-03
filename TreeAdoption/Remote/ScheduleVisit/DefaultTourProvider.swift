@@ -32,7 +32,7 @@ class DefaultTourProvider: TourProvider {
                             result.map {
                                 VisitItem(
                                     id: $0.id,
-                                    title: "Guided visit (\($0.language)",
+                                    title: "Guided visit (\($0.language))",
                                     location: CLLocationCoordinate2D(
                                         latitude: 52.132633,
                                         longitude: 5.291266
@@ -43,7 +43,6 @@ class DefaultTourProvider: TourProvider {
                             }
                         )
                     case let .failure(error):
-                        print(error.localizedDescription)
                         return .failure(error)
                 }
             }

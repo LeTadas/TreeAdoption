@@ -5,6 +5,7 @@ struct PersonalizeTreeView: View {
     @Binding var isPresented: Bool
 
     @ObservedObject var viewModel: PersonalizeTreeViewModel
+    @Environment(\.openURL) var openURL
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -70,17 +71,20 @@ struct PersonalizeTreeView: View {
             .padding(.trailing, 16)
             DefaultButton(
                 titleKey: "personalize_tree_view_adopt_button_title",
-                action: viewModel.adoptThisTreePressed,
+                action: {
+                    viewModel.adoptThisTreePressed(success: { url in
+                        openURL(URL(string: url)!)
+                    })
+                },
                 disabled: $viewModel.continueDisabled
             )
             .padding(.bottom, 24)
             NavigationLink(
                 "",
-                destination: PaymentView(
-                    isPresented: $isPresented,
-                    paymentLink: viewModel.paymentLink
+                destination: PaymentStatusView(
+                    viewModel: PaymentStatusViewModel(WebPaymentStatusProvider(NetworkClient()), viewModel.paymentID)
                 ),
-                isActive: $viewModel.showPayment
+                isActive: $viewModel.showPaymentStatus
             )
         }
         .navigationBarTitle("personalize_tree_view_title", displayMode: .inline)
