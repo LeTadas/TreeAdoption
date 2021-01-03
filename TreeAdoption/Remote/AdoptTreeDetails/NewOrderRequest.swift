@@ -1,10 +1,12 @@
 struct NewOrderRequest: Encodable {
     let userId: Int
+    let paymentRedirectLink: String
     let orderLines: [OrderLine]
 
     enum CodingKeys: String, CodingKey {
         case userId
         case orderLines
+        case paymentRedirectLink
     }
 }
 

@@ -23,7 +23,9 @@ class PersonalizeTreeViewModel: ObservableObject {
 
     @Published var signTitle: String = ""
     @Published var continueDisabled: Bool = true
-    @Published var showPayment: Bool = false
+    @Published var showPaymentStatus: Bool = false
+
+    var paymentID: Int = 0
 
     var paymentLink: String = "https://www.google.com/"
 
@@ -33,7 +35,7 @@ class PersonalizeTreeViewModel: ObservableObject {
 }
 
 extension PersonalizeTreeViewModel {
-    func adoptThisTreePressed() {
+    func adoptThisTreePressed(success: @escaping (String) -> Void) {
         guard let id = Int(productId) else {
             return
         }
@@ -43,8 +45,9 @@ extension PersonalizeTreeViewModel {
             .sink { [unowned self] value in
                 switch value {
                     case let .success(result):
-                        self.paymentLink = result.paymentLink
-                        self.showPayment = true
+                        self.paymentID = result.id
+                        success(result.paymentLink)
+                        self.showPaymentStatus = true
                     case let .failure(error):
                         print("Error: \(error.localizedDescription)")
                 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ScheduleVisitView: View {
-    @ObservedObject var viewModel = ScheduleVisitViewModel(FakeTourProvider())
+    @ObservedObject var viewModel = ScheduleVisitViewModel(DefaultTourProvider(NetworkClient()))
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -26,7 +26,7 @@ struct ScheduleVisitView: View {
                 DefaultButton(
                     titleKey: "schedule_visit_view_schedule_button_title",
                     action: viewModel.scheduleVisit,
-                    disabled: .constant(false)
+                    disabled: $viewModel.scheduleButtonsDisabled
                 )
                 .padding(.bottom, 24)
             }

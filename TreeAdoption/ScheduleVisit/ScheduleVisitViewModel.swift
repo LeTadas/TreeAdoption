@@ -20,13 +20,33 @@ class ScheduleVisitViewModel: ObservableObject {
         location: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         date: Date(),
         description: ""
-    )
+    ) {
+        didSet {
+            updateButton()
+        }
+    }
 
     @Published var state: ViewState<[VisitItem]> = .loading
+
+    @Published var scheduleButtonsDisabled: Bool = true
+
+    private func updateButton() {
+        if selectedVisit.id == -1 {
+            scheduleButtonsDisabled = true
+            return
+        }
+
+        scheduleButtonsDisabled = false
+    }
 }
 
 extension ScheduleVisitViewModel {
-    func scheduleVisit() {}
+    func scheduleVisit() {
+        if selectedVisit.id == -1 {
+            return
+        }
+    }
+
     func onAppear() {
         tourProvider.getAvailableTours()
             .sink { [unowned self] value in
