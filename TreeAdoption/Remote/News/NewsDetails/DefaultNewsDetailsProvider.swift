@@ -7,9 +7,11 @@ protocol NewsDetailsProvider {
 
 class DefaultNewsDetailsProvider: NewsDetailsProvider {
     private let networkClient: NetworkClient
+    private let tokenArchiver: TokenArchiver
 
     init(_ networkClient: NetworkClient) {
         self.networkClient = networkClient
+        tokenArchiver = TokenArchiver()
     }
 
     func getNewsDetails(id: String) -> AnyPublisher<Result<NewsItem, RequestError>, Never> {
@@ -19,19 +21,24 @@ class DefaultNewsDetailsProvider: NewsDetailsProvider {
             fatalError("Could not parse url DefaultNewsDetailsProvider")
         }
 
-        let urlRequest = URLRequest(url: requestUrl)
+        var urlRequest = URLRequest(url: requestUrl)
+
+        guard let token = tokenArchiver.getAccessToken() else {
+            fatalError("Auth token is nil")
+        }
+
+        urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         return networkClient.execute(url: urlRequest)
-            .map { (value: Result<[WebNewsResponse], RequestError>) in
+            .map { (value: Result<WebNewsResponse, RequestError>) in
                 switch value {
                     case let .success(result):
-                        let item = result.first!
                         return .success(
                             NewsItem(
-                                id: item.id,
-                                createdAt: item.createdAt,
-                                title: item.title,
-                                content: item.content
+                                id: result.contentId,
+                                createdAt: result.createdAt,
+                                title: result.title,
+                                content: result.content
                             )
                         )
                     case let .failure(error):

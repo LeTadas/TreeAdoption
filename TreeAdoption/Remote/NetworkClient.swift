@@ -19,10 +19,13 @@ class NetworkClient {
             }
             .catch { error -> Just<Result<T, RequestError>> in
                 if let urlError = error as? URLError {
+                    print("NetworkClient URL ERROR")
                     return Just(.failure(RequestError.urlError(urlError)))
                 } else if let decodingError = error as? DecodingError {
+                    print("NetworkClient DECODING ERROR: \(decodingError.localizedDescription)")
                     return Just(.failure(RequestError.decodingError(decodingError)))
                 } else {
+                    print("NetworkClient ERROR")
                     return Just(.failure(RequestError.genericError(error)))
                 }
             }

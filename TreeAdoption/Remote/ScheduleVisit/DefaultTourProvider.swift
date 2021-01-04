@@ -8,11 +8,13 @@ protocol TourProvider {
 
 class DefaultTourProvider: TourProvider {
     private let networkClient: NetworkClient
+    private let tokenArchiver: TokenArchiver
 
     init(
         _ networkClient: NetworkClient
     ) {
         self.networkClient = networkClient
+        tokenArchiver = TokenArchiver()
     }
 
     func getAvailableTours() -> AnyPublisher<Result<[VisitItem], RequestError>, Never> {
@@ -22,7 +24,13 @@ class DefaultTourProvider: TourProvider {
             fatalError("Could not parse url DefaultTourProvider")
         }
 
-        let urlRequest = URLRequest(url: requestUrl)
+        var urlRequest = URLRequest(url: requestUrl)
+
+        guard let token = tokenArchiver.getAccessToken() else {
+            fatalError("Auth token is nil")
+        }
+
+        urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         return networkClient.execute(url: urlRequest)
             .map { (value: Result<[WebTourResponse], RequestError>) in
