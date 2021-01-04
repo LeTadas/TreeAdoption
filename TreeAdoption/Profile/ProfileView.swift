@@ -181,6 +181,6 @@ struct GoalItem: View {
 
 struct ProfileScene_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(viewModel: ProfileViewModel(User(id: 1, email: "test@gmail.com")))
+        ProfileView(viewModel: ProfileViewModel(User(id: 0, firstName: "", lastName: "", userName: "", email: "")))
     }
 }

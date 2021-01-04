@@ -47,8 +47,10 @@ struct RegisterViewPreviews: PreviewProvider {
         RegisterView(viewModel: RegisterViewModel(
             AccountCreator(
                 CreateAccountService(NetworkClient()),
+                WebUserDetailsService(NetworkClient()),
                 LoginService(NetworkClient()),
-                TokenArchiver()
+                TokenArchiver(),
+                UserPersister()
             ),
             PreviewListener()
         )
