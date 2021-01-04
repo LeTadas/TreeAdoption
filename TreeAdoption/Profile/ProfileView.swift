@@ -68,6 +68,7 @@ struct ProfileView: View {
                     .padding(24)
                 }
                 .navigationBarTitle("profile_view_title", displayMode: .inline)
+                .onAppear(perform: viewModel.onAppear)
             }
         }
     }
@@ -181,6 +182,6 @@ struct GoalItem: View {
 
 struct ProfileScene_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(viewModel: ProfileViewModel(User(id: 0, firstName: "", lastName: "", userName: "", email: "")))
+        ProfileView(viewModel: ProfileViewModel(UserPersister()))
     }
 }
