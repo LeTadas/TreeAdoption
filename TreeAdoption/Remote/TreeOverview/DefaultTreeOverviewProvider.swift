@@ -7,9 +7,11 @@ protocol TreeOverviewProvider {
 
 class DefaultTreeOverviewProvider: TreeOverviewProvider {
     private let networkClient: NetworkClient
+    private let tokenArchiver: TokenArchiver
 
     init(_ networkClient: NetworkClient) {
         self.networkClient = networkClient
+        tokenArchiver = TokenArchiver()
     }
 
     func getTreeOverview() -> AnyPublisher<Result<[TreeResponse], RequestError>, Never> {
@@ -19,7 +21,13 @@ class DefaultTreeOverviewProvider: TreeOverviewProvider {
             fatalError("Could not parse url DefaultTreeOverviewProvider")
         }
 
-        let urlRequest = URLRequest(url: requestUrl)
+        var urlRequest = URLRequest(url: requestUrl)
+
+        guard let token = tokenArchiver.getAccessToken() else {
+            fatalError("Auth token is nil")
+        }
+
+        urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         return networkClient.execute(url: urlRequest)
             .eraseToAnyPublisher()

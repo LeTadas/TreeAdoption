@@ -4,7 +4,7 @@ struct WebNewsResponse: Decodable {
     let id: String
     let contentId: String
     let createdAt: Date
-    let contentType: Int
+    let contentType: String
     let title: String
     let content: String
 
@@ -22,13 +22,13 @@ struct WebNewsResponse: Decodable {
 
         id = try container.decode(String.self, forKey: .id)
         contentId = try container.decode(String.self, forKey: .contentId)
-        contentType = try container.decode(Int.self, forKey: .contentType)
+        contentType = try container.decode(String.self, forKey: .contentType)
         title = try container.decode(String.self, forKey: .title)
         content = try container.decode(String.self, forKey: .content)
 
         let dateString = try container.decode(String.self, forKey: .createdAt)
 
-        if let localDateTime = DateFormatter.localDateTime.date(from: dateString) {
+        if let localDateTime = DateFormatter.zoneDateTime.date(from: dateString) {
             createdAt = localDateTime
         } else {
             throw DecodingError.dataCorruptedError(

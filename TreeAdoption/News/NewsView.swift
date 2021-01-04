@@ -2,7 +2,7 @@ import SwiftUI
 
 struct NewsView: View {
     @ObservedObject var viewModel = NewsViewModel(
-        FakeNewsProvider()
+        DefaultNewsProvider(NetworkClient())
     )
 
     var body: some View {
@@ -43,7 +43,12 @@ struct NewsListView: View {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
                     NavigationLink(
-                        destination: NewsDetailsView(viewModel: NewsDetailsViewModel(FakeNewsDetailsProvider(), item.id))
+                        destination: NewsDetailsView(
+                            viewModel: NewsDetailsViewModel(
+                                DefaultNewsDetailsProvider(NetworkClient()),
+                                item.id
+                            )
+                        )
                     ) {
                         NewsViewItem(item: item)
                     }
