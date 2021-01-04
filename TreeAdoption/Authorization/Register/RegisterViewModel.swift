@@ -63,6 +63,7 @@ extension RegisterViewModel {
                     case .failure:
                         self.errorVisible = true
                 }
+                registerCancellable = nil
             }
     }
 }
