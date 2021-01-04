@@ -15,10 +15,16 @@
 
 //MARK: RegisterView
 "register_view_title" = "Register";
+"register_view_first_name_input_label" = "First Name";
+"register_view_last_name_input_label" = "Last Name";
+"register_view_username_input_label" = "User Name";
 "register_view_email_input_label" = "Email";
 "register_view_password_input_label" = "Password";
 "register_view_repeat_password_input_label" = "Repeat Password";
 "register_view_register_button_label" = "Register";
+"register_view_network_error_title" = "Oops";
+"register_view_network_error_message" = "Network error occurred please try again later.";
+"register_view_network_error_button_label" = "Ok";
 
 //MARK: ForgotPasswordView
 "forgot_password_view_title" = "Forgot Password";
