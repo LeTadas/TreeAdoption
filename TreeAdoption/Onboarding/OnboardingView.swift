@@ -18,7 +18,8 @@ struct OnboardingView: View {
                         NavigationLink(
                             destination: LoginView(
                                 viewModel: LoginViewModel(
-                                    LoginViewListener(viewModel)
+                                    LoginViewListener(viewModel),
+                                    Authenticator(LoginService(NetworkClient()), TokenArchiver())
                                 )
                             )
                         ) {

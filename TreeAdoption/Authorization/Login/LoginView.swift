@@ -9,9 +9,8 @@ struct LoginView: View {
                 Spacer()
                 TextField("login_view_email_input_label", text: $viewModel.email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("login_view_password_input_label", text: $viewModel.password)
+                SecureField("login_view_password_input_label", text: $viewModel.password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.top, 8)
                 HStack {
                     NavigationLink(destination: ForgotPasswordView()) {
                         Text("login_view_forgot_password_button_label")
@@ -53,7 +52,14 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: LoginViewModel(PreviewEvents()))
+        LoginView(viewModel: LoginViewModel(
+            PreviewEvents(),
+            Authenticator(
+                LoginService(NetworkClient()),
+                TokenArchiver()
+            )
+        )
+        )
     }
 
     fileprivate class PreviewEvents: LoginViewEvents {
