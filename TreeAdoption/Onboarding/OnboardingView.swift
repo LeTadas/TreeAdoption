@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @ObservedObject var viewModel: OnboardingViewModel
+
     var body: some View {
         NavigationView {
             ZStack(alignment: .center) {
@@ -13,7 +15,13 @@ struct OnboardingView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: LoginView()) {
+                        NavigationLink(
+                            destination: LoginView(
+                                viewModel: LoginViewModel(
+                                    LoginViewListener(viewModel)
+                                )
+                            )
+                        ) {
                             ZStack {
                                 Rectangle()
                                     .fill(Color("primaryColor"))
@@ -46,6 +54,22 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        OnboardingView(viewModel: OnboardingViewModel(PreviewEvents()))
+    }
+
+    fileprivate class PreviewEvents: OnboardingViewEvents {
+        func onAuthorised() {}
+    }
+}
+
+private class LoginViewListener: LoginViewEvents {
+    private unowned let parent: OnboardingViewModel
+
+    init(_ parent: OnboardingViewModel) {
+        self.parent = parent
+    }
+
+    func onAuthorised() {
+        parent.onAuthorised()
     }
 }

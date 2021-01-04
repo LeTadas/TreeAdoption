@@ -8,6 +8,8 @@ target 'TreeAdoption' do
   # Pods for TreeAdoption
 	pod 'SDWebImageSwiftUI'
 	pod 'Firebase/Messaging'
+	pod 'KeychainAccess'
+	pod "Sniffer", '~> 2.0'
 
 end
 

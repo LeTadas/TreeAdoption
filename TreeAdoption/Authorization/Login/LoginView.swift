@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var viewModel = LoginViewModel()
+    @ObservedObject var viewModel: LoginViewModel
 
     var body: some View {
         VStack {
@@ -22,20 +22,30 @@ struct LoginView: View {
                     Spacer()
                 }
                 Spacer()
-                NavigationLink(destination: RegisterView()) {
+                DefaultButton(
+                    titleKey: "login_view_login_button_label",
+                    action: viewModel.loginPressed,
+                    disabled: .constant(false)
+                )
+                .padding(.bottom, 24)
+                NavigationLink(
+                    destination: RegisterView(
+                        viewModel: RegisterViewModel(
+                            AccountCreator(
+                                CreateAccountService(NetworkClient()),
+                                LoginService(NetworkClient()),
+                                TokenArchiver()
+                            ),
+                            RegisterViewListener(viewModel)
+                        )
+                    )
+                ) {
                     Text("login_view_no_account_button_label")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.accentColor)
                 }
             }
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
-            DefaultButton(
-                titleKey: "login_view_login_button_label",
-                action: viewModel.loginPressed,
-                disabled: .constant(false)
-            )
-            .padding(.top, 24)
+            .padding(24)
         }
         .navigationBarTitle("login_view_title")
     }
@@ -43,6 +53,22 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(viewModel: LoginViewModel(PreviewEvents()))
+    }
+
+    fileprivate class PreviewEvents: LoginViewEvents {
+        func onAuthorised() {}
+    }
+}
+
+private class RegisterViewListener: RegisterViewEvents {
+    private unowned let parent: LoginViewModel
+
+    init(_ parent: LoginViewModel) {
+        self.parent = parent
+    }
+
+    func onAuthorised() {
+        parent.onAuthorised()
     }
 }

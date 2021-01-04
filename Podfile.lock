@@ -49,6 +49,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.1.1):
     - GoogleUtilities/Logger
+  - KeychainAccess (4.2.1)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -60,12 +61,15 @@ PODS:
   - SDWebImage/Core (5.9.2)
   - SDWebImageSwiftUI (1.5.0):
     - SDWebImage (~> 5.7)
+  - Sniffer (2.1.1)
   - SwiftFormat/CLI (0.46.3)
   - SwiftLint (0.40.3)
 
 DEPENDENCIES:
   - Firebase/Messaging
+  - KeychainAccess
   - SDWebImageSwiftUI
+  - Sniffer (~> 2.0)
   - SwiftFormat/CLI
   - SwiftLint
 
@@ -79,10 +83,12 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleDataTransport
     - GoogleUtilities
+    - KeychainAccess
     - nanopb
     - PromisesObjC
     - SDWebImage
     - SDWebImageSwiftUI
+    - Sniffer
     - SwiftFormat
     - SwiftLint
 
@@ -95,13 +101,15 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 7091222bfac24ca89c569c3c59e58390311e487f
   GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
+  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SDWebImage: 0b42b8719ab0c5257177d5894306e8a336b21cbb
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
+  Sniffer: 412603cb61cab0a7d374ffa771e295b9a78e0663
   SwiftFormat: b639417da9e024b9e782f917bc9a080cf75bcb37
   SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
 
-PODFILE CHECKSUM: c016f136366150bca31825b2ba7deb66cbeae78f
+PODFILE CHECKSUM: ddac1ba557ddfef8966ce6290397fd82e55eb99a
 
 COCOAPODS: 1.9.3

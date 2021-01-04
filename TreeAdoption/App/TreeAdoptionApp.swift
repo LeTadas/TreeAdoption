@@ -1,4 +1,5 @@
 import Firebase
+import Sniffer
 import SwiftUI
 
 @main
@@ -7,6 +8,7 @@ struct TreeAdoptionApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
+        Sniffer.register()
         FirebaseApp.configure()
     }
 
@@ -20,7 +22,9 @@ struct TreeAdoptionApp: App {
                         )
                     )
                 case .onboarding:
-                    OnboardingView()
+                    OnboardingView(
+                        viewModel: OnboardingViewModel(OnboardingViewListener(viewModel))
+                    )
                 case .main:
                     MainTabView()
             }
@@ -41,5 +45,17 @@ private class LauncherViewListener: LauncherViewEvents {
 
     func onUnauthenticated() {
         viewModel.onUnauthenticated()
+    }
+}
+
+private class OnboardingViewListener: OnboardingViewEvents {
+    private unowned let viewModel: AppViewModel
+
+    init(_ viewModel: AppViewModel) {
+        self.viewModel = viewModel
+    }
+
+    func onAuthorised() {
+        viewModel.onAuthenticated()
     }
 }
