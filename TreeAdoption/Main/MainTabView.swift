@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct MainTabView: View {
-    init() {
+    @ObservedObject var viewModel: MainTabViewModel
+
+    init(viewModel: MainTabViewModel) {
         UITabBar.appearance().unselectedItemTintColor = UIColor(named: "primaryGray")
         UITabBar.appearance().barTintColor = .white
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -20,7 +23,9 @@ struct MainTabView: View {
                 }
             ProfileView(
                 viewModel: ProfileViewModel(
-                    UserPersister()
+                    ProfileViewListener(viewModel),
+                    UserPersister(),
+                    TokenArchiver()
                 )
             )
             .tabItem {
@@ -34,6 +39,22 @@ struct MainTabView: View {
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView()
+        MainTabView(viewModel: MainTabViewModel(PreviewListener()))
+    }
+
+    fileprivate class PreviewListener: MainTabViewEvents {
+        func onLoggedOut() {}
+    }
+}
+
+private class ProfileViewListener: ProfileViewEvents {
+    private unowned let viewModel: MainTabViewModel
+
+    init(_ viewModel: MainTabViewModel) {
+        self.viewModel = viewModel
+    }
+
+    func onLoggedOut() {
+        viewModel.onLoggedOut()
     }
 }

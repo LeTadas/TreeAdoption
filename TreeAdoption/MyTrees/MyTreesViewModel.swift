@@ -35,4 +35,8 @@ extension MyTreesViewModel {
             }
             .store(in: &bag)
     }
+
+    func onDisappear() {
+        bag.removeAll()
+    }
 }

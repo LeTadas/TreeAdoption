@@ -24,7 +24,7 @@ class DefaultTreeOverviewProvider: TreeOverviewProvider {
         var urlRequest = URLRequest(url: requestUrl)
 
         guard let token = tokenArchiver.getAccessToken() else {
-            fatalError("Auth token is nil")
+            return Just(Result.failure(.genericError(NSError(domain: "", code: 401, userInfo: [:])))).eraseToAnyPublisher()
         }
 
         urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")

@@ -20,4 +20,8 @@ struct UserPersister {
             UserDefaults.standard.set(encoded, forKey: userKey)
         }
     }
+
+    func deleteUser() {
+        UserDefaults.standard.set(nil, forKey: userKey)
+    }
 }

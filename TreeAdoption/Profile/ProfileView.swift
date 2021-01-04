@@ -30,7 +30,9 @@ struct ProfileView: View {
                                 .padding(.top, 16)
                             RowView(
                                 titleKey: "profile_view_settings_visits_row_label",
-                                titleColor: .textPrimary, navigationRow: true
+                                titleColor: .textPrimary,
+                                navigationRow: true,
+                                onPressed: {}
                             )
                             HeaderView(titleKey: "profile_view_settings_profile_header_label")
                                 .padding(.top, 16)
@@ -40,25 +42,29 @@ struct ProfileView: View {
                                     RowView(
                                         titleKey: "profile_view_settings_change_email_row_label",
                                         titleColor: .textPrimary,
-                                        navigationRow: true
+                                        navigationRow: true,
+                                        onPressed: {}
                                     )
                                     DividerView()
                                     RowView(
                                         titleKey: "profile_view_settings_change_password_row_label",
                                         titleColor: .textPrimary,
-                                        navigationRow: true
+                                        navigationRow: true,
+                                        onPressed: {}
                                     )
                                     DividerView()
                                     RowView(
                                         titleKey: "profile_view_settings_delete_account_row_label",
                                         titleColor: .accentColor,
-                                        navigationRow: true
+                                        navigationRow: true,
+                                        onPressed: {}
                                     )
                                     DividerView()
                                     RowView(
                                         titleKey: "profile_view_settings_logout_row_label",
                                         titleColor: .textPrimary,
-                                        navigationRow: false
+                                        navigationRow: false,
+                                        onPressed: viewModel.logout
                                     )
                                 }
                             }
@@ -101,6 +107,7 @@ struct RowView: View {
     let titleKey: LocalizedStringKey
     let titleColor: Color
     let navigationRow: Bool
+    let onPressed: () -> Void
 
     var body: some View {
         ZStack {
@@ -119,6 +126,9 @@ struct RowView: View {
             .padding(12)
         }
         .cornerRadius(10)
+        .onTapGesture {
+            onPressed()
+        }
     }
 }
 
@@ -182,6 +192,16 @@ struct GoalItem: View {
 
 struct ProfileScene_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(viewModel: ProfileViewModel(UserPersister()))
+        ProfileView(
+            viewModel: ProfileViewModel(
+                PreviewEvents(),
+                UserPersister(),
+                TokenArchiver()
+            )
+        )
+    }
+
+    fileprivate class PreviewEvents: ProfileViewEvents {
+        func onLoggedOut() {}
     }
 }

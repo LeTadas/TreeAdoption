@@ -1,11 +1,23 @@
 import Combine
 import UIKit
 
-class ProfileViewModel: ObservableObject {
-    private let userPersister: UserPersister
+protocol ProfileViewEvents {
+    func onLoggedOut()
+}
 
-    init(_ userPersister: UserPersister) {
+class ProfileViewModel: ObservableObject {
+    private let listener: ProfileViewEvents
+    private let userPersister: UserPersister
+    private let tokenArchiver: TokenArchiver
+
+    init(
+        _ listener: ProfileViewEvents,
+        _ userPersister: UserPersister,
+        _ tokenArchiver: TokenArchiver
+    ) {
+        self.listener = listener
         self.userPersister = userPersister
+        self.tokenArchiver = tokenArchiver
     }
 
     @Published var firstNameLetter: String = ""
@@ -23,5 +35,11 @@ extension ProfileViewModel {
             format: NSLocalizedString("profile_view_logged_in_as", comment: ""),
             user.email
         )
+    }
+
+    func logout() {
+        listener.onLoggedOut()
+        userPersister.deleteUser()
+        tokenArchiver.deleteTokens()
     }
 }
