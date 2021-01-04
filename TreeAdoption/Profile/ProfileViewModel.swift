@@ -9,6 +9,7 @@ class ProfileViewModel: ObservableObject {
     }
 
     var firstNameLetter: String {
+        if user.email.isEmpty { return "" }
         return String(user.email.first ?? Character("")).capitalized
     }
 

@@ -32,8 +32,10 @@ struct LoginView: View {
                         viewModel: RegisterViewModel(
                             AccountCreator(
                                 CreateAccountService(NetworkClient()),
+                                WebUserDetailsService(NetworkClient()),
                                 LoginService(NetworkClient()),
-                                TokenArchiver()
+                                TokenArchiver(),
+                                UserPersister()
                             ),
                             RegisterViewListener(viewModel)
                         )
@@ -56,7 +58,9 @@ struct LoginView_Previews: PreviewProvider {
             PreviewEvents(),
             Authenticator(
                 LoginService(NetworkClient()),
-                TokenArchiver()
+                WebUserDetailsService(NetworkClient()),
+                TokenArchiver(),
+                UserPersister()
             )
         )
         )

@@ -1,13 +1,11 @@
 import Foundation
-import KeychainAccess
 
 struct TokenArchiver {
-    private let keychain = Keychain()
     private let accessTokenKey = "adopt_tree_access_token_key"
     private let refreshTokenKey = "adopt_tree_refresh_token_key"
 
     func getAccessToken() -> String? {
-        let token = try? keychain.get(accessTokenKey)
+        let token = UserDefaults.standard.string(forKey: accessTokenKey)
 
         guard let accessToken = token else {
             return nil
@@ -16,15 +14,11 @@ struct TokenArchiver {
     }
 
     func storeAccessToken(token: String?) {
-        if let accessToken = token {
-            try? keychain.set(accessToken, key: accessTokenKey)
-        } else {
-            try? keychain.remove(accessTokenKey)
-        }
+        UserDefaults.standard.set(token, forKey: accessTokenKey)
     }
 
     func getRefreshToken() -> String? {
-        let token = try? keychain.get(refreshTokenKey)
+        let token = UserDefaults.standard.string(forKey: refreshTokenKey)
 
         guard let refreshToken = token else {
             return nil
@@ -33,10 +27,6 @@ struct TokenArchiver {
     }
 
     func storeRefreshToken(token: String?) {
-        if let refreshToken = token {
-            try? keychain.set(refreshToken, key: refreshTokenKey)
-        } else {
-            try? keychain.remove(refreshTokenKey)
-        }
+        UserDefaults.standard.set(token, forKey: refreshTokenKey)
     }
 }

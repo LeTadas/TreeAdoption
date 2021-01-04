@@ -19,7 +19,12 @@ struct OnboardingView: View {
                             destination: LoginView(
                                 viewModel: LoginViewModel(
                                     LoginViewListener(viewModel),
-                                    Authenticator(LoginService(NetworkClient()), TokenArchiver())
+                                    Authenticator(
+                                        LoginService(NetworkClient()),
+                                        WebUserDetailsService(NetworkClient()),
+                                        TokenArchiver(),
+                                        UserPersister()
+                                    )
                                 )
                             )
                         ) {
