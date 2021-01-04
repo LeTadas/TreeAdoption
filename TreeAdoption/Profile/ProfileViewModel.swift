@@ -2,19 +2,24 @@ import Combine
 import UIKit
 
 class ProfileViewModel: ObservableObject {
-    private let user: User
+    private let userPersister: UserPersister
 
-    init(_ user: User) {
-        self.user = user
+    init(_ userPersister: UserPersister) {
+        self.userPersister = userPersister
     }
 
-    var firstNameLetter: String {
-        if user.email.isEmpty { return "" }
-        return String(user.email.first ?? Character("")).capitalized
-    }
+    @Published var firstNameLetter: String = ""
+    @Published var loggedInAs: String = ""
+}
 
-    var loggedInAs: String {
-        return String(
+extension ProfileViewModel {
+    func onAppear() {
+        guard let user = userPersister.getUser() else {
+            return
+        }
+
+        firstNameLetter = String(user.email.first ?? Character("")).capitalized
+        loggedInAs = String(
             format: NSLocalizedString("profile_view_logged_in_as", comment: ""),
             user.email
         )

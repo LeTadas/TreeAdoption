@@ -18,11 +18,15 @@ struct MainTabView: View {
                     Image(systemName: "newspaper.fill")
                     Text("main_tab_view_news_label")
                 }
-            ProfileView(viewModel: ProfileViewModel(User(id: 0, firstName: "", lastName: "", userName: "", email: "")))
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("main_tab_view_profile_label")
-                }
+            ProfileView(
+                viewModel: ProfileViewModel(
+                    UserPersister()
+                )
+            )
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("main_tab_view_profile_label")
+            }
         }
         .accentColor(.primaryColor)
     }
