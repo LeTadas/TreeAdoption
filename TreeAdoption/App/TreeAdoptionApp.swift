@@ -27,7 +27,7 @@ struct TreeAdoptionApp: App {
                         viewModel: OnboardingViewModel(OnboardingViewListener(viewModel))
                     )
                 case .main:
-                    MainTabView()
+                    MainTabView(viewModel: MainTabViewModel(MainTabViewListener(viewModel)))
             }
         }
     }
@@ -58,5 +58,17 @@ private class OnboardingViewListener: OnboardingViewEvents {
 
     func onAuthorised() {
         viewModel.onAuthenticated()
+    }
+}
+
+private class MainTabViewListener: MainTabViewEvents {
+    private unowned let viewModel: AppViewModel
+
+    init(_ viewModel: AppViewModel) {
+        self.viewModel = viewModel
+    }
+
+    func onLoggedOut() {
+        viewModel.onUnauthenticated()
     }
 }

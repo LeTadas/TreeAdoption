@@ -29,4 +29,9 @@ struct TokenArchiver {
     func storeRefreshToken(token: String?) {
         UserDefaults.standard.set(token, forKey: refreshTokenKey)
     }
+
+    func deleteTokens() {
+        UserDefaults.standard.set(nil, forKey: accessTokenKey)
+        UserDefaults.standard.set(nil, forKey: refreshTokenKey)
+    }
 }

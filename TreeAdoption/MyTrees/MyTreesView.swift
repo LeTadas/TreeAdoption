@@ -41,6 +41,7 @@ struct MyTreesView: View {
             }
             .navigationBarTitle("my_trees_view_title", displayMode: .inline)
             .onAppear(perform: viewModel.onAppear)
+            .onDisappear(perform: viewModel.onDisappear)
             .sheet(isPresented: $viewModel.showAdoptView) {
                 AdoptTreeView(isPresented: $viewModel.showAdoptView)
             }

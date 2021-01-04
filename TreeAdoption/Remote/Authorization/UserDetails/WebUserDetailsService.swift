@@ -9,7 +9,7 @@ class WebUserDetailsService {
     }
 
     func getDetails(token: String) -> AnyPublisher<Result<UserDetailsResponse, RequestError>, Never> {
-        let url = URL(string: "\(ApiConfig.url)/user")
+        let url = URL(string: "\(ApiConfig.url)/loggedinuser")
 
         guard let requestUrl = url else {
             fatalError("Could not parse url LoginService")
