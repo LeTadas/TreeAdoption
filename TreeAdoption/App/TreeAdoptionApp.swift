@@ -18,7 +18,8 @@ struct TreeAdoptionApp: App {
                 case .launcher:
                     LauncherView(
                         viewModel: LauncherViewModel(
-                            LauncherViewListener(viewModel)
+                            LauncherViewListener(viewModel),
+                            TokenArchiver()
                         )
                     )
                 case .onboarding:
