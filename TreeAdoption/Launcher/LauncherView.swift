@@ -28,7 +28,7 @@ struct LauncherView: View {
 
 struct LauncherViewPreviews: PreviewProvider {
     static var previews: some View {
-        LauncherView(viewModel: LauncherViewModel(PreviewListener()))
+        LauncherView(viewModel: LauncherViewModel(PreviewListener(), TokenArchiver()))
     }
 
     private class PreviewListener: LauncherViewEvents {
