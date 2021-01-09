@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct ScheduleVisitView: View {
-    @ObservedObject var viewModel = ScheduleVisitViewModel(DefaultTourProvider(NetworkClient()))
+    @ObservedObject var viewModel = ScheduleVisitViewModel(
+        DefaultTourProvider(NetworkClient()),
+        WebBookTourService(NetworkClient())
+    )
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -40,6 +43,13 @@ struct ScheduleVisitView: View {
                 }
             )
             .onAppear(perform: viewModel.onAppear)
+            .alert(isPresented: $viewModel.successVisible) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Successfully scheduled a visit"),
+                    dismissButton: .default(Text("Ok"))
+                )
+            }
         }
     }
 }

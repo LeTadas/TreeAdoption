@@ -4,10 +4,16 @@ import MapKit
 
 class ScheduleVisitViewModel: ObservableObject {
     private let tourProvider: TourProvider
+    private let webBookTourService: WebBookTourService
     private var bag = Set<AnyCancellable>()
+    private var bookATourCancellable: AnyCancellable?
 
-    init(_ tourProvider: TourProvider) {
+    init(
+        _ tourProvider: TourProvider,
+        _ webBookTourService: WebBookTourService
+    ) {
         self.tourProvider = tourProvider
+        self.webBookTourService = webBookTourService
     }
 
     deinit {
@@ -29,6 +35,7 @@ class ScheduleVisitViewModel: ObservableObject {
     @Published var state: ViewState<[VisitItem]> = .loading
 
     @Published var scheduleButtonsDisabled: Bool = true
+    @Published var successVisible: Bool = false
 
     private func updateButton() {
         if selectedVisit.id == -1 {
@@ -45,6 +52,17 @@ extension ScheduleVisitViewModel {
         if selectedVisit.id == -1 {
             return
         }
+
+        bookATourCancellable = webBookTourService.bookATour(tourId: selectedVisit.id)
+            .sink { [unowned self] value in
+                switch value {
+                    case .success:
+                        self.successVisible = true
+                    case .failure:
+                        break
+                }
+                self.bookATourCancellable = nil
+            }
     }
 
     func onAppear() {

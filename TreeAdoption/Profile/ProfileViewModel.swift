@@ -37,6 +37,8 @@ extension ProfileViewModel {
         )
     }
 
+    func viewVisits() {}
+
     func logout() {
         listener.onLoggedOut()
         userPersister.deleteUser()
