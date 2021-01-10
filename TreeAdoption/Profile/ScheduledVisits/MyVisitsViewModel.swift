@@ -19,33 +19,7 @@ class MyVisitsViewModel: ObservableObject {
         bag.removeAll()
     }
 
-    @Published var state: ViewState<[VisitItem]> = .loaded(
-        [
-            VisitItem(
-                id: 0,
-                title: "Guided visit",
-                latitude: 52.083690,
-                longitude: 4.329780,
-                date: Date(),
-                description:
-                """
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim sapien a odio varius volutpat. Donec aliquet imperdiet sagittis. Suspendisse potenti. Etiam eu magna massa. Quisque eleifend sollicitudin risus, id feugiat urna.
-                """
-            ),
-
-            VisitItem(
-                id: 1,
-                title: "Guided visit",
-                latitude: 52.083690,
-                longitude: 4.329780,
-                date: Date(),
-                description:
-                """
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim sapien a odio varius volutpat. Donec aliquet imperdiet sagittis. Suspendisse potenti. Etiam eu magna massa. Quisque eleifend sollicitudin risus, id feugiat urna.
-                """
-            )
-        ]
-    )
+	@Published var state: ViewState<[VisitItem]> = .loading
 
     @Published var viewOnMapVisible: Bool = false
     var viewOnMapMarker: ViewOnMapMarker?
@@ -87,16 +61,16 @@ extension MyVisitsViewModel {
     }
 
     func onAppear() {
-//        bookedTourProvider.getBookedTours()
-//            .sink { [unowned self] value in
-//                switch value {
-//                    case let .success(result):
-//                        self.state = .loaded(result)
-//                    case .failure:
-//                        self.state = .error
-//                }
-//            }
-//            .store(in: &bag)
+        bookedTourProvider.getBookedTours()
+            .sink { [unowned self] value in
+                switch value {
+                    case let .success(result):
+                        self.state = .loaded(result)
+                    case .failure:
+                        self.state = .error
+                }
+            }
+            .store(in: &bag)
     }
 
     func onDisappear() {
