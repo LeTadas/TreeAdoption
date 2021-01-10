@@ -16,6 +16,7 @@ struct TokenArchiver {
     }
 
     func storeAccessToken(token: String?) {
+        print("Storing access token: \(token)")
         UserDefaults.standard.set(token, forKey: accessTokenKey)
     }
 
@@ -29,6 +30,7 @@ struct TokenArchiver {
     }
 
     func storeRefreshToken(token: String?) {
+        print("Storing refresh token: \(token)")
         UserDefaults.standard.set(token, forKey: refreshTokenKey)
     }
 
