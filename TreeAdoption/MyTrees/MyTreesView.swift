@@ -3,10 +3,7 @@ import SwiftUI
 
 struct MyTreesView: View {
     @ObservedObject var viewModel = MyTreesViewModel(
-        DefaultMyTreeProvider(
-            FakeTelemetryProvider(),
-            DefaultTreeOverviewProvider()
-        )
+        DefaultMyTreeProvider(WebUserService(), WebTelemetryService())
     )
 
     var body: some View {

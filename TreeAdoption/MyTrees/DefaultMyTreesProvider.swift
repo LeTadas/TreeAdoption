@@ -1,19 +1,19 @@
 import Combine
 
 class DefaultMyTreeProvider {
-    private let telemetryProvider: TelemetryProvider
-    private let treeOverviewProvider: TreeOverviewProvider
+    private let webUserService: WebUserService
+    private let webTelemetryService: WebTelemetryService
 
     init(
-        _ telemetryProvider: TelemetryProvider,
-        _ treeOverviewProvider: TreeOverviewProvider
+        _ webUserService: WebUserService,
+        _ webTelemetryService: WebTelemetryService
     ) {
-        self.telemetryProvider = telemetryProvider
-        self.treeOverviewProvider = treeOverviewProvider
+        self.webUserService = webUserService
+        self.webTelemetryService = webTelemetryService
     }
 
-    func getTreeSummaries() -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> {
-        return treeOverviewProvider.getTreeOverview()
+    func getAdoptedTrees() -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> {
+        return webUserService.getAdoptedTrees()
             .flatMap { [unowned self] (value: Result<[TreeResponse], RequestError>) -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> in
                 switch value {
                     case let .success(result):
@@ -26,7 +26,7 @@ class DefaultMyTreeProvider {
     }
 
     private func getTelemetries(treeResponse: [TreeResponse]) -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> {
-        return telemetryProvider.getTreeTelemetries()
+        return webTelemetryService.getTreeTelemetries()
             .map { [unowned self] (value: Result<[TelemetryResponse], RequestError>) -> Result<[TreeSummary], RequestError> in
                 switch value {
                     case let .success(result):
@@ -78,13 +78,4 @@ class DefaultMyTreeProvider {
 
         return summaries
     }
-}
-
-struct TreeSummary {
-    let id: Int
-    let name: String
-    let imageUrl: String
-    let humidity: Double
-    let temperature: Double
-    let length: Double
 }

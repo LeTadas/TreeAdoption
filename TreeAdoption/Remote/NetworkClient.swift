@@ -15,7 +15,7 @@ class NetworkClient {
             .tryMap { (data: Data, response: URLResponse) -> Result<T, RequestError> in
 
                 if let error = NetworkErrorMapper.mapError(response: response) {
-                    return .failure(.genericError(error))
+                    throw error
                 }
 
                 let value = try JSONDecoder().decode(T.self, from: data)
@@ -28,6 +28,9 @@ class NetworkClient {
                 } else if let decodingError = error as? DecodingError {
                     print("NetworkClient DECODING ERROR: \(decodingError.localizedDescription)")
                     return Just(.failure(RequestError.decodingError(decodingError)))
+                } else if let networkError = error as? NetworkError {
+                    print("NetworkClient NETWORK ERROR")
+                    return Just(.failure(RequestError.networkError(networkError)))
                 } else {
                     print("NetworkClient ERROR")
                     return Just(.failure(RequestError.genericError(error)))
