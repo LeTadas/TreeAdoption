@@ -24,12 +24,19 @@ extension MyTreesViewModel {
     }
 
     func onAppear() {
-        webMyTreeProvider.getTreeSummaries()
+        webMyTreeProvider.getAdoptedTrees()
             .sink { [unowned self] value in
                 switch value {
                     case let .success(result):
                         self.state = .loaded(result)
-                    case .failure:
+                    case let .failure(error):
+                        if case let RequestError.networkError(networkError) = error {
+                            if networkError.rawValue == 404 {
+                                self.state = .loaded([])
+                                return
+                            }
+                            self.state = .error
+                        }
                         self.state = .error
                 }
             }

@@ -34,4 +34,21 @@ class WebUserService {
 
         return NetworkClient.shared.execute(url: urlRequest)
     }
+
+    func getAdoptedTrees() -> AnyPublisher<Result<[TreeResponse], RequestError>, Never> {
+        let url = URL(string: "\(ApiConfig.url)/user/trees")
+
+        guard let requestUrl = url else {
+            fatalError("Could not parse url WebUserBookedVisitsProvider")
+        }
+
+        var urlRequest = URLRequest(url: requestUrl)
+
+        guard let token = TokenArchiver.shared.getAccessToken() else {
+            fatalError("Auth token is nil")
+        }
+
+        urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return NetworkClient.shared.execute(url: urlRequest)
+    }
 }

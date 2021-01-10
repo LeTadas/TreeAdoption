@@ -1,11 +1,7 @@
 import Combine
 import Foundation
 
-protocol TelemetryProvider {
-    func getTreeTelemetries() -> AnyPublisher<Result<[TelemetryResponse], RequestError>, Never>
-}
-
-class DefaultTelemetryProvider: TelemetryProvider {
+class WebTelemetryService {
     func getTreeTelemetries() -> AnyPublisher<Result<[TelemetryResponse], RequestError>, Never> {
         let url = URL(string: "\(ApiConfig.url)/telemetry")
 
