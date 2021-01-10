@@ -2,6 +2,7 @@ import Combine
 
 protocol BookedTourProvider {
     func getBookedTours() -> AnyPublisher<Result<[VisitItem], RequestError>, Never>
+    func refresh()
 }
 
 class DefaultBookedTourProvider: BookedTourProvider {
@@ -19,15 +20,21 @@ class DefaultBookedTourProvider: BookedTourProvider {
         self.webForestService = webForestService
     }
 
+    private var changeSubject = CurrentValueSubject<Void, Never>(())
+
     func getBookedTours() -> AnyPublisher<Result<[VisitItem], RequestError>, Never> {
-        return webUserService.getBookedTours()
-            .flatMap { [unowned self] value -> AnyPublisher<Result<[VisitItem], RequestError>, Never> in
-                switch value {
-                    case let .success(result):
-                        return self.getAvailableTours(bookedTours: result)
-                    case let .failure(error):
-                        return Just(Result.failure(error)).eraseToAnyPublisher()
-                }
+        return changeSubject
+            .flatMap { [unowned self] _ in
+                self.webUserService.getBookedTours()
+                    .flatMap { [unowned self] value -> AnyPublisher<Result<[VisitItem], RequestError>, Never> in
+                        switch value {
+                            case let .success(result):
+                                return self.getAvailableTours(bookedTours: result)
+                            case let .failure(error):
+                                return Just(Result.failure(error)).eraseToAnyPublisher()
+                        }
+                    }
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
@@ -78,7 +85,7 @@ class DefaultBookedTourProvider: BookedTourProvider {
         return filteredTours.map { tour in
             let forest = availableForests.filter { $0.id == tour.forestId }.first!
             return VisitItem(
-                id: tour.id,
+                id: bookedTours.filter { $0.tourId == tour.id }.first!.id,
                 title: "Guided Tour (\(tour.language))",
                 latitude: forest.latitude,
                 longitude: forest.longitude,
@@ -86,5 +93,9 @@ class DefaultBookedTourProvider: BookedTourProvider {
                 description: tour.description
             )
         }
+    }
+
+    func refresh() {
+        changeSubject.send(())
     }
 }

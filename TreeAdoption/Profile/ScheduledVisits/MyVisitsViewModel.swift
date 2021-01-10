@@ -33,14 +33,14 @@ extension MyVisitsViewModel {
         guard let id = tourId else {
             return
         }
-
-        cancelTourCancellable = webBookTourService.cancelTour(tourId: id)
+        cancelTourCancellable = webBookTourService.cancelTour(bookedTourId: id)
             .sink { [unowned self] value in
                 switch value {
                     case .success:
-                        print("Success")
+                        self.state = .loading
+                        self.bookedTourProvider.refresh()
                     case .failure:
-                        print("Error")
+                        break
                 }
                 self.cancelTourCancellable = nil
             }
