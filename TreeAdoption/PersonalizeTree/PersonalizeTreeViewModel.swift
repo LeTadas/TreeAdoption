@@ -23,11 +23,8 @@ class PersonalizeTreeViewModel: ObservableObject {
 
     @Published var signTitle: String = ""
     @Published var continueDisabled: Bool = true
-    @Published var showPaymentStatus: Bool = false
 
-    var paymentID: Int = 0
-
-    var paymentLink: String = "https://www.google.com/"
+    var paymentLink: String = ""
 
     func updateButton() {
         continueDisabled = treeName.isEmpty
@@ -40,14 +37,17 @@ extension PersonalizeTreeViewModel {
             return
         }
 
+        guard let user = UserPersister.shared.getUser() else {
+            return
+        }
+
         orderCancelable = createOrderInteractor
-            .createOrder(userId: 1, productId: id)
-            .sink { [unowned self] value in
+            .createOrder(userId: user.id, productId: id)
+            .sink { value in
                 switch value {
                     case let .success(result):
-                        self.paymentID = result.id
+                        OrderCache.shared.storeOrderId(id: result.id)
                         success(result.paymentLink)
-                        self.showPaymentStatus = true
                     case let .failure(error):
                         print("Error: \(error.localizedDescription)")
                 }

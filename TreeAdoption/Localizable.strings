@@ -88,11 +88,6 @@
 "profile_view_settings_delete_account_row_label" = "Delete Account";
 "profile_view_settings_logout_row_label" = "Log out";
 
-//MARK: PaymentView
-"payment_view_title" = "Payment";
-"payment_view_cancel_button_label" = "Cancel";
-
-
 //MARK: TreeDetailsView
 "tree_details_view_adoption_contract_ends_label" = "Adoption contract ends: %@";
 "tree_details_view_gallery_label" = "Gallery";
@@ -140,3 +135,11 @@
 "booked_tour_view_cancel_button_title" = "Cancel";
 "booked_tour_view_view_on_map_button_title" = "View On Map";
 "booked_tour_view_about_guide_title" = "About Guide";
+
+//MARK: PaymentStatusView
+"payment_status_view_done_button_title" = "Done";
+"payment_status_view_title" = "Payment Status";
+"payment_status_view_network_error_title" = "Oops";
+"payment_status_view_network_error_message" = "Payment failed please try again later";
+"payment_status_view_success_title" = "Congratulations!";
+"payment_status_view_success_message" = "You successfully adopted a tree";

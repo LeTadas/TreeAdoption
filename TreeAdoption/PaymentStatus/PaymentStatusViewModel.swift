@@ -1,16 +1,13 @@
 import Combine
 
 class PaymentStatusViewModel: ObservableObject {
-    private let paymentStatusProvider: PaymentStatusProvider
-    private let id: Int
+    private let webOrderServiceProvider: WebOrderServiceProvider
     private var bag = Set<AnyCancellable>()
 
     init(
-        _ paymentStatusProvider: PaymentStatusProvider,
-        _ id: Int
+        _ webOrderServiceProvider: WebOrderServiceProvider
     ) {
-        self.paymentStatusProvider = paymentStatusProvider
-        self.id = id
+        self.webOrderServiceProvider = webOrderServiceProvider
     }
 
     deinit {
@@ -22,7 +19,11 @@ class PaymentStatusViewModel: ObservableObject {
 
 extension PaymentStatusViewModel {
     func onAppear() {
-        paymentStatusProvider.getOrderStatus(id: id)
+        guard let id = OrderCache.shared.getOrderId() else {
+            return
+        }
+
+        webOrderServiceProvider.getOrderStatus(id: id)
             .sink { [unowned self] value in
                 switch value {
                     case let .success(result):

@@ -19,7 +19,7 @@ class DefaultAvailableTreesForAdoptionProvider: AvailableTreesForAdoptionProvide
             .map { (value: Result<[WebAdoptTreeResponse], RequestError>) in
                 switch value {
                     case let .success(result):
-                        let items = result.filter { $0.categoryId == 1 || $0.categoryId == 2 }
+                        let items = result.filter { $0.categoryId != 3 }
                         return .success(
                             items.map {
                                 AdoptTreeItem(

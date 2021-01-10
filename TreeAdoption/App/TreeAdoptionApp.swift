@@ -5,7 +5,6 @@ import SwiftUI
 @main
 struct TreeAdoptionApp: App {
     @ObservedObject var viewModel = AppViewModel()
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
         Sniffer.register()
@@ -28,6 +27,18 @@ struct TreeAdoptionApp: App {
                     )
                 case .main:
                     MainTabView(viewModel: MainTabViewModel(MainTabViewListener(viewModel)))
+                        .onOpenURL(perform: viewModel.handleUrl)
+                        .sheet(isPresented: $viewModel.paymentStatusVisible) {
+                            NavigationView {
+                                PaymentStatusView(
+                                    viewModel: PaymentStatusViewModel(WebOrderServiceProvider())
+                                )
+                                .navigationBarItems(trailing:
+                                    Button("payment_status_view_done_button_title") { viewModel.paymentStatusVisible.toggle()
+                                    }
+                                )
+                            }
+                        }
             }
         }
     }

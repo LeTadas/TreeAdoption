@@ -36,7 +36,7 @@ class WebUserService {
     }
 
     func getAdoptedTrees() -> AnyPublisher<Result<[TreeResponse], RequestError>, Never> {
-        let url = URL(string: "\(ApiConfig.url)/user/trees")
+        let url = URL(string: "\(ApiConfig.url)/tree")
 
         guard let requestUrl = url else {
             fatalError("Could not parse url WebUserBookedVisitsProvider")

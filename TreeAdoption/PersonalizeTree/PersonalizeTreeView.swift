@@ -73,19 +73,13 @@ struct PersonalizeTreeView: View {
                 titleKey: "personalize_tree_view_adopt_button_title",
                 action: {
                     viewModel.adoptThisTreePressed(success: { url in
+                        isPresented.toggle()
                         openURL(URL(string: url)!)
                     })
                 },
                 disabled: $viewModel.continueDisabled
             )
             .padding(.bottom, 24)
-            NavigationLink(
-                "",
-                destination: PaymentStatusView(
-                    viewModel: PaymentStatusViewModel(WebPaymentStatusProvider(), viewModel.paymentID)
-                ),
-                isActive: $viewModel.showPaymentStatus
-            )
         }
         .navigationBarTitle("personalize_tree_view_title", displayMode: .inline)
         .navigationBarItems(

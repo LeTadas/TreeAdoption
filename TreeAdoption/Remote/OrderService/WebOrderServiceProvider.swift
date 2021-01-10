@@ -1,11 +1,7 @@
 import Combine
 import Foundation
 
-protocol PaymentStatusProvider {
-    func getOrderStatus(id: Int) -> AnyPublisher<Result<PaymentResult, RequestError>, Never>
-}
-
-class WebPaymentStatusProvider: PaymentStatusProvider {
+class WebOrderServiceProvider {
     func getOrderStatus(id: Int) -> AnyPublisher<Result<PaymentResult, RequestError>, Never> {
         var url = URL(string: "\(ApiConfig.url)/order")
         url?.appendPathComponent(String(id), isDirectory: false)

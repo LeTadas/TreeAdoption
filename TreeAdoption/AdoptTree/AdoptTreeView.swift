@@ -9,7 +9,6 @@ struct AdoptTreeView: View {
 
     init(isPresented: Binding<Bool>) {
         _isPresented = isPresented
-        UINavigationBar.appearance().tintColor = UIColor(named: "primaryColor")
     }
 
     var body: some View {
