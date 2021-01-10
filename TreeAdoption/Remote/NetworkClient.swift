@@ -2,22 +2,24 @@ import Combine
 import Foundation
 
 class NetworkClient {
-    static let shared = NetworkClient()
+    static let shared = NetworkClient(WebRefreshTokenService())
+
+    private let webRefreshTokenService: WebRefreshTokenService
+
+    init(_ webRefreshTokenService: WebRefreshTokenService) {
+        self.webRefreshTokenService = webRefreshTokenService
+    }
 
     func execute<T: Decodable>(url: URLRequest) -> AnyPublisher<Result<T, RequestError>, Never> {
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { element -> Data in
-                guard
-                    let httpResponse = element.response as? HTTPURLResponse,
-                    (200 ... 300).contains(httpResponse.statusCode)
-                else {
-                    throw URLError(.badServerResponse)
+        return refreshingRequest(url: url)
+            .tryMap { (data: Data, response: URLResponse) -> Result<T, RequestError> in
+
+                if let error = NetworkErrorMapper.mapError(response: response) {
+                    return .failure(.genericError(error))
                 }
-                return element.data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
-            .map {
-                .success($0)
+
+                let value = try JSONDecoder().decode(T.self, from: data)
+                return .success(value)
             }
             .catch { error -> Just<Result<T, RequestError>> in
                 if let urlError = error as? URLError {
@@ -32,6 +34,57 @@ class NetworkClient {
                 }
             }
             .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+
+    private func refreshingRequest(url: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
+        return dataTaskPublisher(url: url)
+            .tryCatch { [unowned self] error -> AnyPublisher<(data: Data, response: URLResponse), Error> in
+                switch error {
+                    case NetworkError.unauthorised:
+                        return webRefreshTokenService.refreshToken()
+                            .flatMap { [unowned self] _ -> AnyPublisher<(data: Data, response: URLResponse), Error> in
+                                var authorizedRequest = url
+
+                                if url.allHTTPHeaderFields?["Authorization"] != nil {
+                                    authorizedRequest.allHTTPHeaderFields?.removeValue(forKey: "Authorization")
+                                    let token = TokenArchiver.shared.getAccessToken()
+                                    authorizedRequest.addValue("Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
+                                }
+
+                                return self.dataTaskPublisher(url: authorizedRequest)
+                                    .eraseToAnyPublisher()
+                            }
+                            .eraseToAnyPublisher()
+                    default:
+                        throw error
+                }
+            }
+            .retry(0)
+            .eraseToAnyPublisher()
+    }
+
+    private func dataTaskPublisher(url: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), Error> {
+        return URLSession.shared
+            .dataTaskPublisher(for: url)
+            .mapError { $0 as Error }
+            .map { response -> AnyPublisher<(data: Data, response: URLResponse), Error> in
+                guard let error = NetworkErrorMapper.mapError(response: response.response) else {
+                    return Just(response)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+
+                if let networkError = error as? NetworkError, networkError == NetworkError.unauthorised {
+                    return Fail(error: NetworkError.unauthorised)
+                        .eraseToAnyPublisher()
+                }
+
+                return Just(response)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+            .switchToLatest()
             .eraseToAnyPublisher()
     }
 }

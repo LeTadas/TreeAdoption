@@ -19,7 +19,7 @@ class MyVisitsViewModel: ObservableObject {
         bag.removeAll()
     }
 
-	@Published var state: ViewState<[VisitItem]> = .loading
+    @Published var state: ViewState<[VisitItem]> = .loading
 
     @Published var viewOnMapVisible: Bool = false
     var viewOnMapMarker: ViewOnMapMarker?

@@ -37,11 +37,19 @@ struct TreeResponse: Decodable {
         if let localDateTime = DateFormatter.localDateTime.date(from: dateString) {
             plantedAt = localDateTime
         } else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .plantedAt,
-                in: container,
-                debugDescription: "Date string does not match format expected by formatter."
-            )
+            if let localDateTimeNoMillis = DateFormatter.localDateNoMillisTime.date(from: dateString) {
+                plantedAt = localDateTimeNoMillis
+            } else {
+                if let localDateTimeNoZero = DateFormatter.localDateTimeNoZero.date(from: dateString) {
+                    plantedAt = localDateTimeNoZero
+                } else {
+                    throw DecodingError.dataCorruptedError(
+                        forKey: .plantedAt,
+                        in: container,
+                        debugDescription: "Date string does not match format expected by formatter."
+                    )
+                }
+            }
         }
     }
 }
@@ -91,11 +99,19 @@ struct AssignedTreeResponse: Decodable {
         if let expireAtLocalDateTime = DateFormatter.localDateTime.date(from: expireAtDateString) {
             expireAt = expireAtLocalDateTime
         } else {
-            throw DecodingError.dataCorruptedError(
-                forKey: .expireAt,
-                in: container,
-                debugDescription: "Date string does not match format expected by formatter."
-            )
+            if let localDateTimeNoMillis = DateFormatter.localDateNoMillisTime.date(from: expireAtDateString) {
+                expireAt = localDateTimeNoMillis
+            } else {
+                if let localDateTimeNoZero = DateFormatter.localDateTimeNoZero.date(from: expireAtDateString) {
+                    expireAt = localDateTimeNoZero
+                } else {
+                    throw DecodingError.dataCorruptedError(
+                        forKey: .expireAt,
+                        in: container,
+                        debugDescription: "Date string does not match format expected by formatter."
+                    )
+                }
+            }
         }
     }
 }
