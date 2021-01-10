@@ -5,12 +5,13 @@ struct OnboardingView: View {
 
     var body: some View {
         NavigationView {
-            ZStack(alignment: .center) {
+            ZStack {
                 Text("onboarding_view_title")
-                    .font(.system(size: 45, weight: .bold))
+                    .font(.system(size: 41, weight: .bold))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 307)
                     .foregroundColor(.white)
+                    .offset(y: -7)
                 VStack(alignment: .trailing) {
                     Spacer()
                     HStack {
@@ -47,9 +48,9 @@ struct OnboardingView: View {
             .background(
                 Image("background")
                     .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
+                    .offset(y: -7)
             )
             .navigationBarHidden(true)
         }
