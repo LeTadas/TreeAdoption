@@ -6,14 +6,6 @@ protocol PaymentStatusProvider {
 }
 
 class WebPaymentStatusProvider: PaymentStatusProvider {
-    private let networkClient: NetworkClient
-    private let tokenArchiver: TokenArchiver
-
-    init(_ networkClient: NetworkClient) {
-        self.networkClient = networkClient
-        tokenArchiver = TokenArchiver()
-    }
-
     func getOrderStatus(id: Int) -> AnyPublisher<Result<PaymentResult, RequestError>, Never> {
         var url = URL(string: "\(ApiConfig.url)/order")
         url?.appendPathComponent(String(id), isDirectory: false)
@@ -24,13 +16,13 @@ class WebPaymentStatusProvider: PaymentStatusProvider {
 
         var urlRequest = URLRequest(url: requestUrl)
 
-        guard let token = tokenArchiver.getAccessToken() else {
+        guard let token = TokenArchiver.shared.getAccessToken() else {
             fatalError("Auth token is nil")
         }
 
         urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-        return networkClient.execute(url: urlRequest)
+        return NetworkClient.shared.execute(url: urlRequest)
             .map { [unowned self] (value: Result<WebPaymentStatusResponse, RequestError>) in
                 switch value {
                     case let .success(result):

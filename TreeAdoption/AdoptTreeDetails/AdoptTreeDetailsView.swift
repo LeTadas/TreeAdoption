@@ -33,7 +33,7 @@ struct AdoptTreeDetailsView: View {
                 destination: PersonalizeTreeView(
                     isPresented: $isPresented,
                     viewModel: PersonalizeTreeViewModel(
-                        DefaultCreateOrderInteractor(NetworkClient()),
+                        DefaultCreateOrderInteractor(),
                         viewModel.productId
                     )
                 )

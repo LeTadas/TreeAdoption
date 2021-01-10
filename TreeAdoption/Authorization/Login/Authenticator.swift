@@ -2,20 +2,14 @@ import Combine
 
 class Authenticator {
     private let webLoginService: LoginService
-    private let webUserDetailsService: WebUserDetailsService
-    private let tokenArchiver: TokenArchiver
-    private let userPersister: UserPersister
+    private let webUserDetailsService: WebUserService
 
     init(
         _ webLoginService: LoginService,
-        _ webUserDetailsService: WebUserDetailsService,
-        _ tokenArchiver: TokenArchiver,
-        _ userPersister: UserPersister
+        _ webUserDetailsService: WebUserService
     ) {
         self.webLoginService = webLoginService
         self.webUserDetailsService = webUserDetailsService
-        self.tokenArchiver = tokenArchiver
-        self.userPersister = userPersister
     }
 
     func authorise(username: String, password: String) -> AnyPublisher<Result<Void, RequestError>, Never> {
@@ -24,8 +18,8 @@ class Authenticator {
             .flatMap { [unowned self] value -> AnyPublisher<Result<Void, RequestError>, Never> in
                 switch value {
                     case let .success(response):
-                        self.tokenArchiver.storeAccessToken(token: response.accessToken)
-                        self.tokenArchiver.storeRefreshToken(token: response.refreshToken)
+                        TokenArchiver.shared.storeAccessToken(token: response.accessToken)
+                        TokenArchiver.shared.storeRefreshToken(token: response.refreshToken)
                         return self.resultsFor(token: response.accessToken)
                     case let .failure(error):
                         return Just(Result.failure(error)).eraseToAnyPublisher()
@@ -39,7 +33,7 @@ class Authenticator {
             .map { value in
                 switch value {
                     case let .success(result):
-                        self.userPersister.storeUser(
+                        UserPersister.shared.storeUser(
                             user: User(
                                 id: result.id,
                                 firstName: result.firstname,

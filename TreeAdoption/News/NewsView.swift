@@ -2,13 +2,14 @@ import SwiftUI
 
 struct NewsView: View {
     @ObservedObject var viewModel = NewsViewModel(
-        DefaultNewsProvider(NetworkClient())
+        DefaultNewsProvider()
     )
 
     var body: some View {
         NavigationView {
             ZStack {
                 Color.backgroundGray
+                    .ignoresSafeArea()
                 switch viewModel.state {
                     case .loading:
                         DefaultLoadingView()
@@ -28,7 +29,7 @@ struct NewsView: View {
                         )
                 }
             }
-            .navigationBarTitle("news_view_title", displayMode: .inline)
+            .navigationBarTitle("news_view_title", displayMode: .large)
         }
         .onAppear(perform: viewModel.onAppear)
         .onDisappear(perform: viewModel.onDisappear)
@@ -45,7 +46,7 @@ struct NewsListView: View {
                     NavigationLink(
                         destination: NewsDetailsView(
                             viewModel: NewsDetailsViewModel(
-                                DefaultNewsDetailsProvider(NetworkClient()),
+                                DefaultNewsDetailsProvider(),
                                 item.id
                             )
                         )

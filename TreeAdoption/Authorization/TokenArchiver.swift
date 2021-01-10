@@ -1,6 +1,8 @@
 import Foundation
 
 struct TokenArchiver {
+    static let shared = TokenArchiver()
+
     private let accessTokenKey = "adopt_tree_access_token_key"
     private let refreshTokenKey = "adopt_tree_refresh_token_key"
 

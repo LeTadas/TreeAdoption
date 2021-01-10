@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ScheduleVisitView: View {
     @ObservedObject var viewModel = ScheduleVisitViewModel(
-        DefaultTourProvider(NetworkClient()),
-        WebBookTourService(NetworkClient())
+        DefaultTourProvider(WebTourService()),
+        WebBookTourService()
     )
     @Binding var isPresented: Bool
 

@@ -6,12 +6,6 @@ protocol AvailableTreesForAdoptionProvider {
 }
 
 class DefaultAvailableTreesForAdoptionProvider: AvailableTreesForAdoptionProvider {
-    private let networkClient: NetworkClient
-
-    init(_ networkClient: NetworkClient) {
-        self.networkClient = networkClient
-    }
-
     func getAvailableTrees() -> AnyPublisher<Result<[AdoptTreeItem], RequestError>, Never> {
         let url = URL(string: "\(ApiConfig.url)/product")
 
@@ -21,7 +15,7 @@ class DefaultAvailableTreesForAdoptionProvider: AvailableTreesForAdoptionProvide
 
         let urlRequest = URLRequest(url: requestUrl)
 
-        return networkClient.execute(url: urlRequest)
+        return NetworkClient.shared.execute(url: urlRequest)
             .map { (value: Result<[WebAdoptTreeResponse], RequestError>) in
                 switch value {
                     case let .success(result):

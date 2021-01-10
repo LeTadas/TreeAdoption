@@ -2,12 +2,6 @@ import Combine
 import Foundation
 
 class LoginService {
-    private let networkClient: NetworkClient
-
-    init(_ networkClient: NetworkClient) {
-        self.networkClient = networkClient
-    }
-
     func login(username: String, password: String) -> AnyPublisher<Result<LoginResponse, RequestError>, Never> {
         let url = URL(string: "\(ApiConfig.url)/auth/login")
 
@@ -28,7 +22,7 @@ class LoginService {
 
         urlRequest.httpBody = jsonData
 
-        return networkClient.execute(url: urlRequest)
+        return NetworkClient.shared.execute(url: urlRequest)
             .eraseToAnyPublisher()
     }
 }

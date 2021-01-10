@@ -2,12 +2,6 @@ import Combine
 import Foundation
 
 class CreateAccountService {
-    private let networkClient: NetworkClient
-
-    init(_ networkClient: NetworkClient) {
-        self.networkClient = networkClient
-    }
-
     func register(
         _ registerInfo: RegisterInfo
     ) -> AnyPublisher<Result<CreateAccountResponse, RequestError>, Never> {
@@ -33,7 +27,7 @@ class CreateAccountService {
 
         urlRequest.httpBody = jsonData
 
-        return networkClient.execute(url: urlRequest)
+        return NetworkClient.shared.execute(url: urlRequest)
             .eraseToAnyPublisher()
     }
 }
