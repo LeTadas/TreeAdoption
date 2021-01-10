@@ -39,8 +39,8 @@ class WebBookTourService {
         return NetworkClient.shared.execute(url: urlRequest)
     }
 
-    func cancelTour(tourId: Int) -> AnyPublisher<Result<Void, RequestError>, Never> {
-        let url = URL(string: "\(ApiConfig.url)/bookedtour/\(tourId)")
+    func cancelTour(bookedTourId: Int) -> AnyPublisher<Result<Void, RequestError>, Never> {
+        let url = URL(string: "\(ApiConfig.url)/bookedtour/\(bookedTourId)")
 
         guard let requestUrl = url else {
             fatalError("Could not parse url WebBookTourService")
