@@ -2,6 +2,8 @@ import Combine
 import Foundation
 
 class NetworkClient {
+    static let shared = NetworkClient()
+
     func execute<T: Decodable>(url: URLRequest) -> AnyPublisher<Result<T, RequestError>, Never> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap { element -> Data in

@@ -5,18 +5,15 @@ struct MyTreesView: View {
     @ObservedObject var viewModel = MyTreesViewModel(
         DefaultMyTreeProvider(
             FakeTelemetryProvider(),
-            DefaultTreeOverviewProvider(NetworkClient())
+            DefaultTreeOverviewProvider()
         )
     )
-
-    init() {
-        UINavigationBar.appearance().barTintColor = .white
-    }
 
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
                 Color.backgroundGray
+                    .ignoresSafeArea()
                 switch viewModel.state {
                     case .loading:
                         DefaultLoadingView()
@@ -39,7 +36,7 @@ struct MyTreesView: View {
                 )
                 .padding(.bottom, 24)
             }
-            .navigationBarTitle("my_trees_view_title", displayMode: .inline)
+            .navigationBarTitle("my_trees_view_title", displayMode: .large)
             .onAppear(perform: viewModel.onAppear)
             .onDisappear(perform: viewModel.onDisappear)
             .sheet(isPresented: $viewModel.showAdoptView) {

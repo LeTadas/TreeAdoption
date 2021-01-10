@@ -6,12 +6,6 @@ protocol AvailableDetailsProvider {
 }
 
 class DefaultAvailableDetailsProvider: AvailableDetailsProvider {
-    private let networkClient: NetworkClient
-
-    init(_ networkClient: NetworkClient) {
-        self.networkClient = networkClient
-    }
-
     func getDetails(id: String) -> AnyPublisher<Result<AdoptTreeDetails, RequestError>, Never> {
         let url = URL(string: "\(ApiConfig.url)/product/\(id)")
 
@@ -21,7 +15,7 @@ class DefaultAvailableDetailsProvider: AvailableDetailsProvider {
 
         let urlRequest = URLRequest(url: requestUrl)
 
-        return networkClient.execute(url: urlRequest)
+        return NetworkClient.shared.execute(url: urlRequest)
             .map { (value: Result<WebAdoptTreeDetailsResponse, RequestError>) in
                 switch value {
                     case let .success(result):

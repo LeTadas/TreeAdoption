@@ -2,23 +2,17 @@ import Combine
 
 class AccountCreator {
     private let webCreateAccountService: CreateAccountService
-    private let webUserDetailsService: WebUserDetailsService
+    private let webUserDetailsService: WebUserService
     private let webLoginService: LoginService
-    private let tokenArchiver: TokenArchiver
-    private let userPersister: UserPersister
 
     init(
         _ webCreateAccountService: CreateAccountService,
-        _ webUserDetailsService: WebUserDetailsService,
-        _ webLoginService: LoginService,
-        _ tokenArchiver: TokenArchiver,
-        _ userPersister: UserPersister
+        _ webUserDetailsService: WebUserService,
+        _ webLoginService: LoginService
     ) {
         self.webCreateAccountService = webCreateAccountService
         self.webUserDetailsService = webUserDetailsService
         self.webLoginService = webLoginService
-        self.tokenArchiver = tokenArchiver
-        self.userPersister = userPersister
     }
 
     func register(registerInfo: RegisterInfo) -> AnyPublisher<Result<Void, RequestError>, Never> {
@@ -44,8 +38,8 @@ class AccountCreator {
             .flatMap { [unowned self] value -> AnyPublisher<Result<Void, RequestError>, Never> in
                 switch value {
                     case let .success(response):
-                        self.tokenArchiver.storeAccessToken(token: response.accessToken)
-                        self.tokenArchiver.storeRefreshToken(token: response.refreshToken)
+                        TokenArchiver.shared.storeAccessToken(token: response.accessToken)
+                        TokenArchiver.shared.storeRefreshToken(token: response.refreshToken)
                         return self.resultsFor(token: response.accessToken)
                     case let .failure(error):
                         return Just(Result.failure(error)).eraseToAnyPublisher()
@@ -59,7 +53,7 @@ class AccountCreator {
             .map { value in
                 switch value {
                     case let .success(result):
-                        self.userPersister.storeUser(
+                        UserPersister.shared.storeUser(
                             user: User(
                                 id: result.id,
                                 firstName: result.firstname,

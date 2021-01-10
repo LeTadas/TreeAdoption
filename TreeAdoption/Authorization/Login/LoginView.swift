@@ -31,11 +31,9 @@ struct LoginView: View {
                     destination: RegisterView(
                         viewModel: RegisterViewModel(
                             AccountCreator(
-                                CreateAccountService(NetworkClient()),
-                                WebUserDetailsService(NetworkClient()),
-                                LoginService(NetworkClient()),
-                                TokenArchiver(),
-                                UserPersister()
+                                CreateAccountService(),
+                                WebUserService(),
+                                LoginService()
                             ),
                             RegisterViewListener(viewModel)
                         )
@@ -57,10 +55,8 @@ struct LoginView_Previews: PreviewProvider {
         LoginView(viewModel: LoginViewModel(
             PreviewEvents(),
             Authenticator(
-                LoginService(NetworkClient()),
-                WebUserDetailsService(NetworkClient()),
-                TokenArchiver(),
-                UserPersister()
+                LoginService(),
+                WebUserService()
             )
         )
         )

@@ -1,7 +1,7 @@
 import Foundation
 
 struct WebForestResponse: Decodable {
-    let id: String
+    let id: Int
     let name: String
     let latitude: Double
     let longitude: Double
@@ -16,7 +16,7 @@ struct WebForestResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(String.self, forKey: .id)
+        id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         guard let latitudeString = try? container.decode(String.self, forKey: .latitude) else {
             fatalError("Could not parse latitude WebForestResponse")

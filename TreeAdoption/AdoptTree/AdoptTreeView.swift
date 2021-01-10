@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AdoptTreeView: View {
     @ObservedObject var viewModel = AdoptTreeViewModel(
-        DefaultAvailableTreesForAdoptionProvider(NetworkClient())
+        DefaultAvailableTreesForAdoptionProvider()
     )
 
     @Binding var isPresented: Bool
@@ -60,7 +60,7 @@ struct AdoptTreeList: View {
                     NavigationLink(
                         destination: AdoptTreeDetailsView(
                             AdoptTreeDetailsViewModel(
-                                DefaultAvailableDetailsProvider(NetworkClient()),
+                                DefaultAvailableDetailsProvider(),
                                 "\(item.id)"
                             ),
                             $isPresented

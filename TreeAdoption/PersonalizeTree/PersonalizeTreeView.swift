@@ -82,7 +82,7 @@ struct PersonalizeTreeView: View {
             NavigationLink(
                 "",
                 destination: PaymentStatusView(
-                    viewModel: PaymentStatusViewModel(WebPaymentStatusProvider(NetworkClient()), viewModel.paymentID)
+                    viewModel: PaymentStatusViewModel(WebPaymentStatusProvider(), viewModel.paymentID)
                 ),
                 isActive: $viewModel.showPaymentStatus
             )

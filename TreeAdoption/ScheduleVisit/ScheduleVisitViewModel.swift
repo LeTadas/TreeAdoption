@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import MapKit
 
 class ScheduleVisitViewModel: ObservableObject {
     private let tourProvider: TourProvider
@@ -23,7 +22,8 @@ class ScheduleVisitViewModel: ObservableObject {
     @Published var selectedVisit = VisitItem(
         id: -1,
         title: "",
-        location: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+        latitude: 0,
+        longitude: 0,
         date: Date(),
         description: ""
     ) {
@@ -86,7 +86,8 @@ extension ScheduleVisitViewModel {
 struct VisitItem: Equatable {
     let id: Int
     let title: String
-    let location: CLLocationCoordinate2D
+    let latitude: Double
+    let longitude: Double
     let date: Date
     let description: String
 

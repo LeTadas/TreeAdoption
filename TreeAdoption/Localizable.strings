@@ -81,7 +81,7 @@
 "profile_view_goal_title" = "Keep it up!";
 "profile_view_goal_message" = "This month your trees hit the records in reducing CO2 from environment";
 "profile_view_settings_visits_header_label" = "Visits";
-"profile_view_settings_visits_row_label" = "My Visits";
+"profile_view_settings_visits_row_label" = "Scheduled Visits";
 "profile_view_settings_profile_header_label" = "Profile";
 "profile_view_settings_change_email_row_label" = "Change Email Address";
 "profile_view_settings_change_password_row_label" = "Change Password";
@@ -124,3 +124,19 @@
 "schedule_visit_view_network_error_title" = "Oops";
 "schedule_visit_view_network_error_description" = "Network error occurred please try again later.";
 "schedule_visit_view_schedule_button_title" = "Schedule";
+
+//MARK: MyVisitsView
+"my_visits_view_title" = "Scheduled Visits";
+"my_visits_view_network_error_title" = "Oops";
+"my_visits_view_network_error_description" = "Network error occurred please try again later.";
+"my_visits_view_no_visits_message" = "You don't have any scheduled tours.";
+"my_visits_view_done_button_title" = "Done";
+"my_visits_view_cancel_alert_title" = "Are you sure?";
+"my_visits_view_cancel_alert_message" = "Your will be removed from participants list.";
+"my_visits_view_cancel_alert_primary_button_title" = "Remove Me";
+"my_visits_view_cancel_alert_secondary_button_title" = "Cancel";
+
+//MARK: BookedTourView
+"booked_tour_view_cancel_button_title" = "Cancel";
+"booked_tour_view_view_on_map_button_title" = "View On Map";
+"booked_tour_view_about_guide_title" = "About Guide";

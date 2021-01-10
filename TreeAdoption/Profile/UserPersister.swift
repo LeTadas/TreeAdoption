@@ -1,6 +1,8 @@
 import Foundation
 
 struct UserPersister {
+    static let shared = UserPersister()
+
     private let userKey = "adopt_tree_user_key"
 
     func getUser() -> User? {

@@ -6,6 +6,7 @@ struct NewsDetailsView: View {
     var body: some View {
         ZStack {
             Color.backgroundGray
+                .ignoresSafeArea()
             switch viewModel.state {
                 case .loading:
                     DefaultLoadingView()
@@ -57,7 +58,7 @@ struct NewsDetailsScrollView: View {
     }
 }
 
-struct NewsDetailsView_Previews: PreviewProvider {
+struct NewsDetailsViewPreviews: PreviewProvider {
     static var previews: some View {
         NewsDetailsView(viewModel: NewsDetailsViewModel(FakeNewsDetailsProvider(), "1"))
     }
