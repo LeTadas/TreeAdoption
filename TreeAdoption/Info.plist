@@ -10,7 +10,7 @@
 				<string>mollie-app</string>
 			</array>
 			<key>CFBundleURLName</key>
-			<string>com.mollie.MollieApp</string>
+			<string>nl.tadas.treeadoption</string>
 		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>

@@ -9,6 +9,7 @@ struct UserPersister {
         if let userData = UserDefaults.standard.object(forKey: userKey) as? Data {
             let decoder = JSONDecoder()
             if let user = try? decoder.decode(User.self, from: userData) {
+                print("USER: \(user)")
                 return user
             }
         }
