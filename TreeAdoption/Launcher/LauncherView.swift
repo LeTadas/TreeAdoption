@@ -5,10 +5,10 @@ struct LauncherView: View {
 
     var body: some View {
         NavigationView {
-            ZStack(alignment: .center) {
+            ZStack {
                 Color.clear
                 Text("launcher_view_title")
-                    .font(.system(size: 45, weight: .bold))
+                    .font(.system(size: 41, weight: .bold))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 307)
                     .foregroundColor(.white)
@@ -16,12 +16,11 @@ struct LauncherView: View {
             .background(
                 Image("background")
                     .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
             )
             .navigationBarHidden(true)
             .onAppear(perform: viewModel.onAppear)
+            .ignoresSafeArea()
         }
     }
 }
