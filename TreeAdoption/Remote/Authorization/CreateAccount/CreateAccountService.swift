@@ -8,7 +8,7 @@ class CreateAccountService {
         let url = URL(string: "\(ApiConfig.url)/auth/register")
 
         guard let requestUrl = url else {
-            fatalError("Could not parse url DefaultTreeOverviewProvider")
+            fatalError("Could not parse url CreateAccountService")
         }
 
         var urlRequest = URLRequest(url: requestUrl)

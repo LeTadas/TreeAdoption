@@ -10,7 +10,7 @@ class DefaultAvailableTreesForAdoptionProvider: AvailableTreesForAdoptionProvide
         let url = URL(string: "\(ApiConfig.url)/product")
 
         guard let requestUrl = url else {
-            fatalError("Could not parse url DefaultTreeOverviewProvider")
+            fatalError("Could not parse url DefaultAvailableTreesForAdoptionProvider")
         }
 
         let urlRequest = URLRequest(url: requestUrl)

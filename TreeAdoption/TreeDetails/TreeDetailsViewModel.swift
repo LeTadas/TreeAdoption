@@ -3,6 +3,27 @@ import Foundation
 import MapKit
 
 class TreeDetailsViewModel: ObservableObject {
+    private let treeId: Int
+    private let defaultTreeDetailsProvider: DefaultTreeDetailsProvider
+    let treeName: String
+    private var bag = Set<AnyCancellable>()
+
+    init(
+        _ treeId: Int,
+        _ defaultTreeDetailsProvider: DefaultTreeDetailsProvider,
+        _ treeName: String
+    ) {
+        self.treeId = treeId
+        self.defaultTreeDetailsProvider = defaultTreeDetailsProvider
+        self.treeName = treeName
+    }
+
+    deinit {
+        bag.removeAll()
+    }
+
+    func setViews() {}
+
     @Published var sheetVisible: Bool = false
 
     @Published var treeRegion = MKCoordinateRegion(
@@ -16,13 +37,8 @@ class TreeDetailsViewModel: ObservableObject {
         )
     )
 
-    var treePinLocation: [TreeLocation] = [
-        TreeLocation(
-            location: CLLocationCoordinate2D(
-                latitude: 52.083690,
-                longitude: 4.329780
-            )
-        )
+    var treePinLocation: [ViewOnMapMarker] = [
+        ViewOnMapMarker(latitude: 52.083690, longitude: 4.329780)
     ]
 
     @Published var graphData = GraphData(
@@ -46,38 +62,14 @@ class TreeDetailsViewModel: ObservableObject {
         ]
     )
 
-    @Published var state: ViewState<TreeDetails> = .loaded(
-        TreeDetails(
-            treeName: "White Oak",
-            contractEndsAt: Date(),
-            treeImageUrls: [
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg"
-            ],
-            animalsDetected: [
-                Animal(type: 0),
-                Animal(type: 1),
-                Animal(type: 2),
-                Animal(type: 3)
-            ],
-            treeHealth: TreeHealth(
-                condition: "Oak Wilt",
-                severityFraction: 0.1,
-                updatedAt: Date()
-            ),
-            humidity: 40,
-            temperature: 18
-        )
-    )
-
+    @Published var state: ViewState<TreeDetails> = .loading
     @Published var sheetView: DetailsSheetView = .timeline
 }
 
 enum DetailsSheetView {
     case timeline
     case bookATour
+    case viewMap
 }
 
 extension TreeDetailsViewModel {
@@ -89,6 +81,28 @@ extension TreeDetailsViewModel {
     func showBookATour() {
         sheetView = .bookATour
         sheetVisible = true
+    }
+
+    func showMap() {
+        sheetView = .viewMap
+        sheetVisible = true
+    }
+
+    func onAppear() {
+        defaultTreeDetailsProvider.getTreeDetails(treeId: treeId)
+            .sink { [unowned self] value in
+                switch value {
+                    case let .success(result):
+                        self.state = .loaded(result)
+                    case .failure:
+                        self.state = .error
+                }
+            }
+            .store(in: &bag)
+    }
+
+    func onDisappear() {
+        bag.removeAll()
     }
 }
 
