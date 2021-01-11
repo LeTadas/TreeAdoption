@@ -37,6 +37,9 @@ struct TreeDetailsView: View {
                 Button(action: viewModel.showBookATour) {
                     Image(systemName: "ticket")
                 }
+                Button(action: actionSheet) {
+                    Image(systemName: "square.and.arrow.up")
+                }
             }
         )
         .onAppear(perform: viewModel.onAppear)
@@ -73,6 +76,12 @@ struct TreeDetailsView: View {
                     }
             }
         }
+    }
+
+    func actionSheet() {
+        let items = [viewModel.treeName]
+        let av = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
     }
 }
 
@@ -151,7 +160,7 @@ struct GalleryView: View {
                 .scaledToFill()
                 .frame(maxWidth: .infinity, maxHeight: 150)
                 .clipped()
-                .cornerRadius(20)
+                .cornerRadius(10)
                 .transition(.fade(duration: 0.5))
                 .padding(.top, 16)
                 ZStack(alignment: .center) {

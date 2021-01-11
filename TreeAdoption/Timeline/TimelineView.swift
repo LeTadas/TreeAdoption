@@ -95,9 +95,9 @@ struct TimelineImageView: View {
                 Rectangle().foregroundColor(.primaryGray)
             }
             .scaledToFill()
-            .frame(maxWidth: 96, maxHeight: .infinity)
+            .frame(maxWidth: 96, maxHeight: 96)
             .clipped()
-            .cornerRadius(20)
+            .cornerRadius(10)
             .transition(.fade(duration: 0.5))
             VStack {
                 Text(item.title)

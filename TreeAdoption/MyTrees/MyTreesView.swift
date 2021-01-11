@@ -36,8 +36,24 @@ struct MyTreesView: View {
             .navigationBarTitle("my_trees_view_title", displayMode: .large)
             .onAppear(perform: viewModel.onAppear)
             .onDisappear(perform: viewModel.onDisappear)
-            .sheet(isPresented: $viewModel.showAdoptView) {
-                AdoptTreeView(isPresented: $viewModel.showAdoptView)
+            .onOpenURL(perform: viewModel.handleUrl)
+            .sheet(isPresented: $viewModel.sheetVisible) {
+                switch viewModel.sheet {
+                    case .adoptTree:
+                        AdoptTreeView(isPresented: $viewModel.sheetVisible)
+                    case .paymentStatus:
+                        NavigationView {
+                            PaymentStatusView(
+                                viewModel: PaymentStatusViewModel(WebOrderServiceProvider())
+                            )
+                            .navigationBarItems(trailing:
+                                Button("payment_status_view_done_button_title") {
+                                    viewModel.refresh()
+                                    viewModel.sheetVisible.toggle()
+                                }
+                            )
+                        }
+                }
             }
         }
     }
