@@ -143,3 +143,16 @@
 "payment_status_view_network_error_message" = "Payment failed please try again later";
 "payment_status_view_success_title" = "Congratulations!";
 "payment_status_view_success_message" = "You successfully adopted a tree";
+
+//MARK: ChangeEmailView
+"change_email_view_title" = "Change Email";
+"change_email_view_current_username_input_placeholder" = "Current Username";
+"change_email_view_new_email_input_placeholder" = "New Email";
+"change_email_view_repeat_new_email_input_placeholder" = "Repeat New Email";
+"change_email_view_password_input_placeholder" = "Password";
+"change_email_button_title" = "Change Email";
+"change_email_success_alert_title" = "Success";
+"change_email_success_alert_message" = "Email was successfully changed";
+"change_email_alert_ok_button" = "Ok";
+"change_email_error_alert_title" = "Oops";
+"change_email_error_alert_message" = "Network error occurred. Please try again later";

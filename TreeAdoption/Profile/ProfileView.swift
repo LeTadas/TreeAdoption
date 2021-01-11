@@ -28,11 +28,12 @@ struct ProfileView: View {
                             ProfileSectionView(titleKey: "profile_view_settings_profile_header_label")
                                 .padding(.top, 16)
                             VStack(spacing: 0) {
-                                ProfileRowView(
-                                    titleKey: "profile_view_settings_change_email_row_label",
-                                    titleColor: .textPrimary,
-                                    onPressed: {}
-                                )
+                                NavigationLink(destination: ChangeEmailView()) {
+                                    ProfileNavigationRowView(
+                                        titleKey: "profile_view_settings_change_email_row_label",
+                                        titleColor: .textPrimary
+                                    )
+                                }
                                 DividerView()
                                 ProfileRowView(
                                     titleKey: "profile_view_settings_change_password_row_label",
