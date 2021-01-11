@@ -1,6 +1,11 @@
 import Combine
 import Foundation
 
+enum MyTreesSheets {
+    case adoptTree
+    case paymentStatus
+}
+
 class MyTreesViewModel: ObservableObject {
     private let webMyTreeProvider: DefaultMyTreeProvider
     private var bag = Set<AnyCancellable>()
@@ -15,12 +20,25 @@ class MyTreesViewModel: ObservableObject {
 
     @Published var state: ViewState<[TreeSummary]> = .loading
 
-    @Published var showAdoptView: Bool = false
+    @Published var sheetVisible: Bool = false
+    var sheet: MyTreesSheets = .adoptTree
 }
 
 extension MyTreesViewModel {
+    func handleUrl(url: URL) {
+        if url.host! == "payment-return" {
+            sheet = .paymentStatus
+            sheetVisible = true
+        }
+    }
+
     func adoptTreePressed() {
-        showAdoptView = true
+        sheet = .adoptTree
+        sheetVisible = true
+    }
+
+    func refresh() {
+        webMyTreeProvider.refresh()
     }
 
     func onAppear() {

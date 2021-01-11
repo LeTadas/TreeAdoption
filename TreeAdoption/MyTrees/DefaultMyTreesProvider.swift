@@ -12,15 +12,21 @@ class DefaultMyTreeProvider {
         self.webTelemetryService = webTelemetryService
     }
 
+    private var changeSubject = CurrentValueSubject<Void, Never>(())
+
     func getAdoptedTrees() -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> {
-        return webUserService.getAdoptedTrees()
-            .flatMap { [unowned self] (value: Result<[TreeResponse], RequestError>) -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> in
-                switch value {
-                    case let .success(result):
-                        return self.getTelemetries(treeResponse: result)
-                    case let .failure(error):
-                        return Just(Result.failure(error)).eraseToAnyPublisher()
-                }
+        return changeSubject
+            .flatMap { [unowned self] in
+                self.webUserService.getAdoptedTrees()
+                    .flatMap { [unowned self] (value: Result<[TreeResponse], RequestError>) -> AnyPublisher<Result<[TreeSummary], RequestError>, Never> in
+                        switch value {
+                            case let .success(result):
+                                return self.getTelemetries(treeResponse: result)
+                            case let .failure(error):
+                                return Just(Result.failure(error)).eraseToAnyPublisher()
+                        }
+                    }
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
@@ -41,11 +47,14 @@ class DefaultMyTreeProvider {
     private func mapResults(treeResponse: [TreeResponse], telemetries: [TelemetryResponse]) -> [TreeSummary] {
         let summaries = treeResponse.map { treeOverview -> TreeSummary in
             let treeTelemetry = telemetries.filter { $0.treeId == String(treeOverview.id) }.first
-
+            var treeName = treeOverview.assignedTree.name
+            if treeName.isEmpty {
+                treeName = "White Oak"
+            }
             guard let telemetry = treeTelemetry else {
                 return TreeSummary(
                     id: treeOverview.id,
-                    name: treeOverview.assignedTree.name,
+                    name: treeName,
                     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
                     humidity: 0,
                     temperature: 0,
@@ -58,7 +67,7 @@ class DefaultMyTreeProvider {
             guard let latestReport = reports.first else {
                 return TreeSummary(
                     id: treeOverview.id,
-                    name: treeOverview.assignedTree.name,
+                    name: treeName,
                     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
                     humidity: 0,
                     temperature: 0,
@@ -68,7 +77,7 @@ class DefaultMyTreeProvider {
 
             return TreeSummary(
                 id: treeOverview.id,
-                name: treeOverview.assignedTree.name,
+                name: treeName,
                 imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Joshua_Tree_01.jpg/1200px-Joshua_Tree_01.jpg",
                 humidity: latestReport.humidity,
                 temperature: latestReport.temperature,
@@ -77,5 +86,9 @@ class DefaultMyTreeProvider {
         }
 
         return summaries
+    }
+
+    func refresh() {
+        changeSubject.send(())
     }
 }
