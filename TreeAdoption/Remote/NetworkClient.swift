@@ -50,7 +50,8 @@ class NetworkClient {
                                 var authorizedRequest = url
 
                                 if url.allHTTPHeaderFields?["Authorization"] != nil {
-                                    authorizedRequest.allHTTPHeaderFields?.removeValue(forKey: "Authorization")
+                                    authorizedRequest.allHTTPHeaderFields?["Authorization"] = nil
+                                    authorizedRequest.setValue(nil, forHTTPHeaderField: "Authorization")
                                     let token = TokenArchiver.shared.getAccessToken()
                                     authorizedRequest.addValue("Bearer \(token ?? "")", forHTTPHeaderField: "Authorization")
                                 }

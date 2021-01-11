@@ -45,7 +45,7 @@ class WebUserService {
         var urlRequest = URLRequest(url: requestUrl)
 
         guard let token = TokenArchiver.shared.getAccessToken() else {
-            fatalError("Auth token is nil")
+            return Just(Result.failure(RequestError.genericError(NSError()))).eraseToAnyPublisher()
         }
 
         urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")

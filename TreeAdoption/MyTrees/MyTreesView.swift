@@ -66,7 +66,17 @@ struct TreeList: View {
         ScrollView {
             LazyVStack {
                 ForEach(items, id: \.id) { item in
-                    NavigationLink(destination: TreeDetailsView()) {
+                    NavigationLink(
+                        destination: TreeDetailsView(
+                            viewModel: TreeDetailsViewModel(
+                                item.id,
+                                DefaultTreeDetailsProvider(
+                                    WebTreeService(),
+                                    WebTelemetryService()
+                                ), item.name
+                            )
+                        )
+                    ) {
                         TreeViewItem(item: item)
                     }
                 }

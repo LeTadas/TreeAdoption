@@ -3,11 +3,12 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct TreeDetailsView: View {
-    @ObservedObject var viewModel = TreeDetailsViewModel()
+    @ObservedObject var viewModel: TreeDetailsViewModel
 
     var body: some View {
         ZStack {
             Color.backgroundGray
+                .ignoresSafeArea()
             switch viewModel.state {
                 case .loading:
                     DefaultLoadingView()
@@ -16,7 +17,8 @@ struct TreeDetailsView: View {
                         item: result,
                         treePinLocation: viewModel.treePinLocation,
                         graphData: viewModel.graphData,
-                        treeRegion: $viewModel.treeRegion
+                        treeRegion: $viewModel.treeRegion,
+                        onMapPressed: viewModel.showMap
                     )
                 case .error:
                     DefaultErrorView(
@@ -25,6 +27,7 @@ struct TreeDetailsView: View {
                     )
             }
         }
+        .navigationBarTitle(viewModel.treeName, displayMode: .large)
         .navigationBarItems(
             trailing:
             HStack {
@@ -36,6 +39,8 @@ struct TreeDetailsView: View {
                 }
             }
         )
+        .onAppear(perform: viewModel.onAppear)
+        .onDisappear(perform: viewModel.onDisappear)
         .sheet(isPresented: $viewModel.sheetVisible) {
             switch viewModel.sheetView {
                 case .timeline:
@@ -45,6 +50,27 @@ struct TreeDetailsView: View {
                     )
                 case .bookATour:
                     ScheduleVisitView(isPresented: $viewModel.sheetVisible)
+                case .viewMap:
+                    NavigationView {
+                        ViewOnMapView(
+                            markers: viewModel.treePinLocation,
+                            coordinateRegion: MKCoordinateRegion(
+                                center: CLLocationCoordinate2D(
+                                    latitude: 52.083690,
+                                    longitude: 4.329780
+                                ),
+                                span: MKCoordinateSpan(
+                                    latitudeDelta: 0.2,
+                                    longitudeDelta: 0.2
+                                )
+                            )
+                        )
+                        .navigationBarItems(
+                            trailing: Button("my_visits_view_done_button_title") {
+                                viewModel.sheetVisible.toggle()
+                            }
+                        )
+                    }
             }
         }
     }
@@ -52,30 +78,22 @@ struct TreeDetailsView: View {
 
 struct TreeDetailsScrollView: View {
     let item: TreeDetails
-    let treePinLocation: [TreeLocation]
+    let treePinLocation: [ViewOnMapMarker]
     let graphData: GraphData
     @Binding var treeRegion: MKCoordinateRegion
+    let onMapPressed: () -> Void
 
     var body: some View {
         ScrollView {
             VStack {
-                Text(item.treeName)
-                    .font(.system(size: 32, weight: .heavy))
-                    .lineLimit(2)
-                    .foregroundColor(Color.textPrimary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(formatContractEndsAt())
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(Color.accentColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 GalleryView(
                     mainImageUrl: item.treeImageUrls.first!,
                     imageCount: item.treeImageUrls.count
                 )
-                .padding(.top, 16)
                 LocationView(
                     coordinates: $treeRegion,
-                    pinLocations: treePinLocation
+                    pinLocations: treePinLocation,
+                    onPressed: onMapPressed
                 )
                 .padding(.top, 16)
                 AnimalsDetectedView(animals: item.animalsDetected)
@@ -88,7 +106,12 @@ struct TreeDetailsScrollView: View {
                     HumidityView(humidity: item.humidity)
                 }
                 .padding(.top, 16)
-                .padding(.bottom, 50)
+                Text(formatContractEndsAt())
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(Color.accentColor)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 16)
+                    .padding(.bottom, 50)
                 Spacer()
             }
             .padding(24)
@@ -149,7 +172,8 @@ struct GalleryView: View {
 
 struct LocationView: View {
     @Binding var coordinates: MKCoordinateRegion
-    let pinLocations: [TreeLocation]
+    let pinLocations: [ViewOnMapMarker]
+    let onPressed: () -> Void
 
     var body: some View {
         VStack {
@@ -159,13 +183,16 @@ struct LocationView: View {
                 interactionModes: .zoom,
                 annotationItems: pinLocations
             ) { item in
-                MapPin(coordinate: item.location)
+                MapPin(coordinate: item.coordinate)
             }
-            .cornerRadius(20)
+            .cornerRadius(10)
         }
         .padding(16)
         .background(CardBackground())
         .frame(maxWidth: .infinity, maxHeight: 150)
+        .onTapGesture {
+            onPressed()
+        }
     }
 }
 
@@ -403,6 +430,6 @@ struct CardTitleView: View {
 
 struct TreeDetailsScene_Previews: PreviewProvider {
     static var previews: some View {
-        TreeDetailsView()
+        TreeDetailsView(viewModel: TreeDetailsViewModel(12, DefaultTreeDetailsProvider(WebTreeService(), WebTelemetryService()), "White oak"))
     }
 }
